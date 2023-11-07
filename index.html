@@ -36,8 +36,7 @@
       href="./images/android-chrome-512x512.png"
     />
     <link rel="apple-touch-icon" href="./images/apple-touch-icon.png" />
-    <link rel="stylesheet" href="./vendor/normalize.css" />
-    <link rel="stylesheet" href="./vendor/fonts/fonts.css" />
+
     <link rel="stylesheet" href="./pages/index.css" />
     <title>Место</title>
     <script src="app.js" defer></script>
@@ -47,103 +46,105 @@
     <header class="header">
       <img class="header__logo" src="./images/logo.svg" alt="Место" />
     </header>
-    <section class="profile">
-      <div class="profile__avatar">
-        <img
-          src="./images/photo_2023-10-29_01-13-26.jpg"
-          class="profile__avatar-image"
-          alt="Аватар"
-        />
-      </div>
-      <div class="profile__info">
-        <div class="profile__edit">
-          <h1 class="profile__title">Arien the Cat</h1>
-          <button class="profile__button-edit"></button>
+    <main>
+      <section class="profile">
+        <div class="profile__avatar">
+          <img
+            src="./images/ava.jpeg"
+            class="profile__avatar-image"
+            alt="Аватар"
+          />
         </div>
-        <p class="profile__subtitle">Житель Земли</p>
-      </div>
-      <button class="profile__button"></button>
-    </section>
+        <div class="profile__info">
+          <div class="profile__edit">
+            <h1 class="profile__title">Arien the Cat</h1>
+            <button class="profile__button-edit" type="submit" title="редактировать"></button>
+          </div>
+          <p class="profile__subtitle">Житель Земли</p>
+        </div>
+        <button class="profile__button" type="submit" title="добавить фото"></button>
+      </section>
 
-    <section class="elements">
-      <figure class="element">
-        <img
-          class="element__rectangle"
-          src="./images/photo_2023-10-28_23-29-41.jpg"
-          alt="Старый Бар"
-        />
-        <div class="element__container">
-          <p class="element__caption">Старый Бар</p>
-          <button class="element__like element__like_active"></button>
-        </div>
-      </figure>
-      <figure class="element">
-        <img
-          class="element__rectangle"
-          src="./images/photo_2023-10-28_23-29-44.jpg"
-          alt="Старый Бар"
-        />
-        <div class="element__container">
-          <p class="element__caption">Старый Бар</p>
-          <button class="element__like"></button>
-        </div>
-      </figure>
-      <figure class="element">
-        <img
-          class="element__rectangle"
-          src="./images/photo_2023-10-28_23-29-47.jpg"
-          alt="крепость"
-        />
-        <div class="element__container">
-          <p class="element__caption">Крепость</p>
-          <button class="element__like"></button>
-        </div>
-      </figure>
-      <figure class="element">
-        <img
-          class="element__rectangle"
-          src="./images/photo_2023-10-28_23-29-50.jpg"
-          alt="Старый Бар, вид с крепостной стены"
-        />
-        <div class="element__container">
-          <p class="element__caption">Старый Бар</p>
-          <button class="element__like"></button>
-        </div>
-      </figure>
-      <figure class="element">
-        <img
-          class="element__rectangle"
-          src="./images/photo_2023-10-28_23-29-52.jpg"
-          alt="Старый Бар, вид на крепостную стену"
-        />
-        <div class="element__container">
-          <p class="element__caption">Старый Бар</p>
-          <button class="element__like"></button>
-        </div>
-      </figure>
-      <figure class="element">
-        <img
-          class="element__rectangle"
-          src="./images/photo_2023-10-28_23-29-57.jpg"
-          alt="вид на Старый Бар"
-        />
-        <div class="element__container">
-          <p class="element__caption">Старый Бар</p>
-          <button class="element__like element__like_active"></button>
-        </div>
-      </figure>
-    </section>
+      <section class="elements">
+        <figure class="element">
+          <img
+            class="element__rectangle"
+            src="./images/photo_2023-10-28_23-29-41.jpg"
+            alt="Старый Бар"
+          />
+          <div class="element__container">
+            <h2 class="element__caption">Старый Бар</h>
+            <button class="element__like "></button><!--element__like_active-->
+          </div>
+        </figure>
+        <figure class="element">
+          <img
+            class="element__rectangle"
+            src="./images/photo_2023-10-28_23-29-44.jpg"
+            alt="Старый Бар"
+          />
+          <div class="element__container">
+            <h2 class="element__caption">Старый Бар</h>
+            <button class="element__like"></button>
+          </div>
+        </figure>
+        <figure class="element">
+          <img
+            class="element__rectangle"
+            src="./images/photo_2023-10-28_23-29-47.jpg"
+            alt="крепость"
+          />
+          <div class="element__container">
+            <h2 class="element__caption">Крепость</h>
+            <button class="element__like"></button>
+          </div>
+        </figure>
+        <figure class="element">
+          <img
+            class="element__rectangle"
+            src="./images/photo_2023-10-28_23-29-50.jpg"
+            alt="Старый Бар, вид с крепостной стены"
+          />
+          <div class="element__container">
+            <h2 class="element__caption">Старый Бар</h>
+            <button class="element__like"></button>
+          </div>
+        </figure>
+        <figure class="element">
+          <img
+            class="element__rectangle"
+            src="./images/photo_2023-10-28_23-29-52.jpg"
+            alt="Старый Бар, вид на крепостную стену"
+          />
+          <div class="element__container">
+            <h2 class="element__caption">Старый Бар</h>
+            <button class="element__like"></button>
+          </div>
+        </figure>
+        <figure class="element">
+          <img
+            class="element__rectangle"
+            src="./images/photo_2023-10-28_23-29-57.jpg"
+            alt="вид на Старый Бар"
+          />
+          <div class="element__container">
+            <h2 class="element__caption">Старый Бар</h>
+            <button class="element__like"></button>
+          </div>
+        </figure>
+      </section>
+    </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
     </footer>
     <div class="popup">
       <!--popup_opened-->
       <div class="popup__container">
-        <button type="button" class="popup__close-button"></button>
+        <button type="button" class="popup__close-button" aria-label="закрыть попап"></button>
         <h2 class="popup__form-title">Редактировать профиль</h2>
-        <form class="popup__form">
-          <input type="text" placeholder="Arien the Cat" class="popup__input" />
-          <input type="text" placeholder="Житель Земли" class="popup__input" />
+        <form class="popup__form " name="form-popup">
+          <input type="text" placeholder="Arien the Cat" class="popup__input popup__input_username" name="name" required/>
+          <input type="text" placeholder="Житель Земли" class="popup__input popup__input_about" name="about" />
           <button type="submit" class="popup__button">Сохранить</button>
         </form>
       </div>
