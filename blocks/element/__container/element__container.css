@@ -1,0 +1,7 @@
+.element__container {
+  padding: 25px 15px 31px 21px;
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+}

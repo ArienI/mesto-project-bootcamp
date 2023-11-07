@@ -36,11 +36,14 @@
       href="./images/android-chrome-512x512.png"
     />
     <link rel="apple-touch-icon" href="./images/apple-touch-icon.png" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./vendor/normalize.css" />
+    <link rel="stylesheet" href="./vendor/fonts/fonts.css" />
+    <link rel="stylesheet" href="./pages/index.css" />
     <title>Место</title>
+    <script src="app.js" defer></script>
   </head>
 
-  <body class="page page__content">
+  <body class="page">
     <header class="header">
       <img class="header__logo" src="./images/logo.svg" alt="Место" />
     </header>
@@ -54,12 +57,11 @@
       </div>
       <div class="profile__info">
         <div class="profile__edit">
-          <h1 class="profile__title">Arien ***</h1>
+          <h1 class="profile__title">Arien the Cat</h1>
           <button class="profile__button-edit"></button>
         </div>
-        <p class="profile__subtitle">житель Земли</p>
+        <p class="profile__subtitle">Житель Земли</p>
       </div>
-
       <button class="profile__button"></button>
     </section>
 
@@ -71,9 +73,8 @@
           alt="Старый Бар"
         />
         <div class="element__container">
-          <p class="element__caption">
-            Старый Бар <button class="element__group"></button>
-          </p>
+          <p class="element__caption">Старый Бар</p>
+          <button class="element__like element__like_active"></button>
         </div>
       </figure>
       <figure class="element">
@@ -83,9 +84,8 @@
           alt="Старый Бар"
         />
         <div class="element__container">
-          <p class="element__caption">
-            Старый Бар <button class="element__group"></button>
-          </p>
+          <p class="element__caption">Старый Бар</p>
+          <button class="element__like"></button>
         </div>
       </figure>
       <figure class="element">
@@ -95,9 +95,8 @@
           alt="крепость"
         />
         <div class="element__container">
-          <p class="element__caption">
-            Крепость<button class="element__group"></button>
-          </p>
+          <p class="element__caption">Крепость</p>
+          <button class="element__like"></button>
         </div>
       </figure>
       <figure class="element">
@@ -107,11 +106,8 @@
           alt="Старый Бар, вид с крепостной стены"
         />
         <div class="element__container">
-          <p class="element__caption">
-            Старый Бар, красивые виды с крепостной стены<button
-              class="element__group"
-            ></button>
-          </p>
+          <p class="element__caption">Старый Бар</p>
+          <button class="element__like"></button>
         </div>
       </figure>
       <figure class="element">
@@ -121,11 +117,8 @@
           alt="Старый Бар, вид на крепостную стену"
         />
         <div class="element__container">
-          <p class="element__caption">
-            Старый Бар, вид на крепостную стену<button
-              class="element__group"
-            ></button>
-          </p>
+          <p class="element__caption">Старый Бар</p>
+          <button class="element__like"></button>
         </div>
       </figure>
       <figure class="element">
@@ -135,25 +128,24 @@
           alt="вид на Старый Бар"
         />
         <div class="element__container">
-          <p class="element__caption">
-            вид на Старый Бар<button class="element__group"></button>
-          </p>
+          <p class="element__caption">Старый Бар</p>
+          <button class="element__like element__like_active"></button>
         </div>
       </figure>
-    </section>
-    <section class="popup">
-      <!--popup_opened-->
-      <div class="popup__container">
-        <form class="popup__form">
-          <h2 class="popup__form-title">Редактировать профиль</h2>
-          <input type="text" placeholder="Arien***" class="popup__input" />
-          <input type="text" placeholder="житель Земли" class="popup__input" />
-          <button type="submit" class="popup__button">Сохранить</button>
-        </form>
-      </div>
     </section>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
     </footer>
+    <div class="popup popup_opened">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button"></button>
+        <h2 class="popup__form-title">Редактировать профиль</h2>
+        <form class="popup__form">
+          <input type="text" placeholder="Arien the Cat" class="popup__input" />
+          <input type="text" placeholder="Житель Земли" class="popup__input" />
+          <button type="submit" class="popup__button">Сохранить</button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

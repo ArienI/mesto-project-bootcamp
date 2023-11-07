@@ -1,0 +1,17 @@
+.popup__form-title {
+  color: #000;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  margin-top: 0;
+  margin-bottom: 54px;
+}
+@media (max-width: 680px) {
+    .popup__form-title {
+        margin-bottom: 75px;
+        max-width: 238px;
+        font-size: 18px;
+      }
+}
