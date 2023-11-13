@@ -1,9 +1,6 @@
 .element {
   min-width: 282px;
-  height: 361px;
-  border: 0;
   cursor: pointer;
-  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
@@ -11,6 +8,6 @@
   border-radius: 10px;
   background: #c4c4c4;
   position: relative;
-  overflow: hidden;
   margin: 0;
+  background-color: #fff;
 }

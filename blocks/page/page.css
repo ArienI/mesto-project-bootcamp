@@ -9,8 +9,16 @@
   font-family: "Inter", Arial, sans-serif;
   margin: 45px auto 60px;
 }
+
 @media screen and (max-width: 920px) {
   .page {
     padding: 0 10px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .page {
+    margin: 28px auto 36px;
+    padding: 0;
   }
 }
