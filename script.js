@@ -26,6 +26,8 @@ const profileJobText = document.querySelector(".profile__subtitle");
 const elementContainer = document.querySelector(".element__container");
 // Шаблон карточки
 const cardTemplate = document.getElementById("cardTemplate").content;
+// кнопка""корзинка" для удаления картинки
+const deleteCard = document.querySelectorAll(".place__delete-button");
 
 // вкл/выкл like
 function handleClickLikeButton(likeButton) {
@@ -79,8 +81,24 @@ document.addEventListener("keydown", (evt) => {
     const openedPopup = document.querySelector(".popup_opened");
     //  если находит, то условие выполняется
     if (openedPopup) {
-      // удалем popup_opened у найденого элемента
+      // удалем .popup_opened у найденого элемента
       openedPopup.classList.remove("popup_opened");
+    }
+  }
+});
+
+// добавляем обработчик удаления картинки на корзинку
+document.addEventListener("click", function (event) {
+  // проверяет, является ли элемент элементом с классом ".button__delete"
+  // .matches-метод используется для проверки, соответствует ли элемент определённому CSS-селектору
+  // .target- идентификация элемента, вызвавшего событие
+  if (event.target.matches(".button__delete")) {
+    // если клик сделан по "корзинке", то находит ближайший элемент с классом ".element"
+    // .closest  используется для поиска ближайшего родительского элемента, который соответствует заданному CSS-селектору(начинает поиск вверх по иерархии)
+    const cardElement = event.target.closest(".element");
+    // карточка удаляется из dom
+    if (cardElement) {
+      cardElement.remove();
     }
   }
 });
