@@ -1,4 +1,4 @@
-.profile__button {
+.profile__button-add-photo {
   background: transparent url("../../../images/AddButton.svg") no-repeat center;
   margin-left: auto;
   margin-top: 35px;
@@ -11,20 +11,20 @@
 }
 
 @media screen and (max-width: 920px) {
-  .profile__button {
+  .profile__button-add-photo {
     margin: 36px 0 0 18px;
     width: 100%;
   }
 }
 
 @media screen and (max-width: 680px) {
-  .profile__button {
+  .profile__button-add-photo {
     margin: 36px 0 0;
     width: 282px;
   }
 }
 
-.profile__button:hover {
+.profile__button-add-photo:hover {
   opacity: 0.6;
   transition: 1s;
 }
