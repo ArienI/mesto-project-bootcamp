@@ -1,6 +1,5 @@
 .element {
   min-width: 282px;
-  cursor: pointer;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
