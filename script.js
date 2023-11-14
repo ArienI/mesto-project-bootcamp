@@ -70,3 +70,17 @@ function handleFormSubmit(evt) {
 }
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElement.addEventListener("submit", handleFormSubmit);
+
+// добавляем обработчик событий на весь документ
+document.addEventListener("keydown", (evt) => {
+  // проверяем, является ли нажатая клавиша Esc
+  if (evt.key === "Escape") {
+    // ищет элемент с классом .popup_opened
+    const openedPopup = document.querySelector(".popup_opened");
+    //  если находит, то условие выполняется
+    if (openedPopup) {
+      // удалем popup_opened у найденого элемента
+      openedPopup.classList.remove("popup_opened");
+    }
+  }
+});
