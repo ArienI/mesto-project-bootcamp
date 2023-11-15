@@ -1,4 +1,29 @@
-//import { initialCards } from "./utils/utils";
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
 // кнопка редактировать профиль
 const editProfileButton = document.querySelector(".profile__button-edit");
@@ -22,18 +47,18 @@ const jobInput = formElement.querySelector('[name="profileAbout"]');
 const profileNameText = document.querySelector(".profile__title");
 // поле, куда нужно вставить информацию "о разном"
 const profileJobText = document.querySelector(".profile__subtitle");
-//контейнер для карточек
+// контейнер для карточек
 const elementContainer = document.querySelector(".element__container");
 // Шаблон карточки
-const cardTemplate = document.getElementById("cardTemplate").content;
+const cardTemplate = document.getElementById("cardTemplate").content.querySelector('.element');
 // кнопка""корзинка" для удаления картинки
 const deleteCard = document.querySelectorAll(".place__delete-button");
 
+// Обработка лайков
 // вкл/выкл like
 function handleClickLikeButton(likeButton) {
   likeButton.classList.toggle("element__like_active");
 }
-
 // проходимся в цикле по всем кнопкам like и вешаем на них обработчик
 likeButtons.forEach((likeButton) => {
   likeButton.addEventListener("click", () => handleClickLikeButton(likeButton));
@@ -41,6 +66,8 @@ likeButtons.forEach((likeButton) => {
 
 // на кнопку редактирования профиля вешаем обработчик который будет открывать попап
 editProfileButton.addEventListener("click", () => {
+  nameInput.value = profileNameText.textContent;
+  jobInput.value = profileJobText.textContent;
   popupProfile.classList.add("popup_opened");
 });
 
@@ -61,18 +88,17 @@ popupCloseButtons.forEach((popupCloseButton) => {
 
 // обработчик "отправки" формы
 function handleFormSubmit(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-  // Получите значение полей jobInput и nameInput из свойства value
-  let nameValue = nameInput.value; // Получаем значение из поля ввода имени
-  let jobValue = jobInput.value; // Получаем значение из поля ввода "о разном"
-
+  // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
+  evt.preventDefault();
   // Вставьте новые значения с помощью textContent
-  profileNameText.textContent = nameValue;
-  profileJobText.textContent = jobValue;
+  profileNameText.textContent = nameInput.value;
+  profileJobText.textContent = jobInput.value;
+  popupProfile.classList.remove("popup_opened");
 }
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formElement.addEventListener("submit", handleFormSubmit);
 
+// при нажатии на Escape открытый попап должен закрываться
 // добавляем обработчик событий на весь документ
 document.addEventListener("keydown", (evt) => {
   // проверяем, является ли нажатая клавиша Esc

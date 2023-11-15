@@ -12,23 +12,3 @@
   font-weight: 400;
   line-height: normal;
 }
-
-.place__delete-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-image: url("/images/Trash.svg");
-  background-color: #000;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  border: none;
-  width: 18px;
-  height: 19px;
-  cursor: pointer;
-}
-
-.place__delete-button:hover {
-  opacity: 0.5;
-  transition: 3s;
-}
