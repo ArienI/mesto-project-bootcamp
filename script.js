@@ -1,6 +1,6 @@
 const initialCards = [
   {
-    name: 'водичка)',
+    name: 'водичка',
     link: 'https://images.unsplash.com/photo-1503756234508-e32369269deb?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
@@ -36,7 +36,7 @@ const popupAddCard = document.getElementById("popupAddCard");
 // массив всех кнопок закрытия попапов
 const popupCloseButtons = document.querySelectorAll(".popup__close-button");
 // массив всех кнопок like
-const likeButtons = document.querySelectorAll(".element__like");
+const likeButtons = document.querySelectorAll(".card__like");
 // форма редактирования профиля И добавления карточки
 const formElement = document.querySelector(".popup__form");
 // поле редактирования имени
@@ -48,16 +48,16 @@ const profileNameText = document.querySelector(".profile__title");
 // поле, куда нужно вставить информацию "о разном"
 const profileJobText = document.querySelector(".profile__subtitle");
 // контейнер для карточек
-const elementContainer = document.querySelector(".element__container");
+const cardContainer = document.querySelector(".card__container");
 // Шаблон карточки
-const cardTemplate = document.getElementById("cardTemplate").content.querySelector('.element');
+const cardTemplate = document.getElementById("cardTemplate").content.querySelector('.card');
 // кнопка""корзинка" для удаления картинки
-const deleteCard = document.querySelectorAll(".place__delete-button");
+const deleteCard = document.querySelectorAll(".card__delete-button");
 
 // Обработка лайков
 // вкл/выкл like
 function handleClickLikeButton(likeButton) {
-  likeButton.classList.toggle("element__like_active");
+  likeButton.classList.toggle("card__like_active");
 }
 // проходимся в цикле по всем кнопкам like и вешаем на них обработчик
 likeButtons.forEach((likeButton) => {
@@ -115,13 +115,13 @@ document.addEventListener("keydown", (evt) => {
 
 // добавляем обработчик удаления картинки на корзинку
 document.addEventListener("click", function (event) {
-  // проверяет, является ли элемент элементом с классом ".button__delete"
+  // проверяет, является ли элемент элементом с классом ".card__delete-button"
   // .matches-метод используется для проверки, соответствует ли элемент определённому CSS-селектору
   // .target- идентификация элемента, вызвавшего событие
-  if (event.target.matches(".button__delete")) {
+  if (event.target.matches(".card__delete-button")) {
     // если клик сделан по "корзинке", то находит ближайший элемент с классом ".element"
     // .closest  используется для поиска ближайшего родительского элемента, который соответствует заданному CSS-селектору(начинает поиск вверх по иерархии)
-    const cardElement = event.target.closest(".element");
+    const cardElement = event.target.closest(".card");
     // карточка удаляется из dom
     if (cardElement) {
       cardElement.remove();
