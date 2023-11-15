@@ -1,6 +1,6 @@
 const initialCards = [
   {
-    name: 'водичка',
+    name: 'водичка)',
     link: 'https://images.unsplash.com/photo-1503756234508-e32369269deb?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
@@ -22,7 +22,43 @@ const initialCards = [
   {
     name: 'meow',
     link: 'https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2F0fGVufDB8fDB8fHww'
-  }
+  },
+     {name: 'лошадка',
+    link: 'https://images.unsplash.com/photo-1577936861999-2ee541936e4b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+  {
+    name: 'ещё одна лошадка',
+    link: 'https://images.unsplash.com/photo-1539808163380-beb256654c64?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+  {
+    name: 'замок',
+    link: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+  {
+    name: 'озеро',
+    link: 'https://images.unsplash.com/photo-1505159940484-eb2b9f2588e2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+  {
+    name: 'flowers',
+    link: 'https://images.unsplash.com/photo-1490709501740-c7ac36b7d587?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+  {
+    name: 'this was a Hobbit hole',
+    link: 'https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+   {
+    name: ')',
+    link: 'https://plus.unsplash.com/premium_photo-1668723712387-d5076dae388e?q=80&w=1970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+  {
+    name: 'boo...',
+    link: 'https://images.unsplash.com/photo-1635604521676-04f4f46b60e2?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+  {
+    name: 'тыктыктыковка',
+    link: 'https://images.unsplash.com/photo-1573051056354-ac3efd32cd67?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
+
 ];
 
 // кнопка редактировать профиль
@@ -128,3 +164,36 @@ document.addEventListener("click", function (event) {
     }
   }
 });
+
+
+// Функция создания карточки
+function createCard(name, link) {
+  const cardElement = cardTemplate.cloneNode(true); // клонируем шаблон
+  cardElement.querySelector('.card__rectangle').src = link; // устанавливаем ссылку на изображение
+  cardElement.querySelector('.card__rectangle').alt = name; // устанавливаем альтернативный текст изображения
+  cardElement.querySelector('.card__caption').textContent = name; // устанавливаем название
+  return cardElement;
+}
+
+// Функция добавления карточки в контейнер
+function addCardToContainer(cardElement) {
+  cardContainer.prepend(cardElement); // добавляем карточку в начало контейнера
+}
+
+// Обработчик отправки формы
+formElement.addEventListener('submit', function (evt) {
+  evt.preventDefault(); // предотвращаем стандартное поведение формы
+  const cardName = formElement.cardName.value; // берём название из поля формы
+  const cardURL = formElement.cardURL.value; // берём ссылку из поля формы
+  const cardElement = createCard(cardName, cardURL); // создаём карточку
+  addCardToContainer(cardElement); // добавляем карточку в контейнер
+});
+
+
+// Добавление начальных карточек из массива
+initialCards.forEach((card) => {
+  addCardToContainer(createCard(card.name, card.link));
+});
+
+
+
