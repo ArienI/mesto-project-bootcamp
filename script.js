@@ -44,7 +44,7 @@ const initialCards = [
   },
   {
     name: 'this was a Hobbit hole',
-    link: 'https://images.unsplash.com/photo-1518562180175-34a163b1a9a6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    link: 'https://images.unsplash.com/photo-1575735409309-e0ecb6088fcd?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
    {
     name: ')',
@@ -58,7 +58,10 @@ const initialCards = [
     name: 'тыктыктыковка',
     link: 'https://images.unsplash.com/photo-1573051056354-ac3efd32cd67?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
-
+  {
+    name: '(((',
+    link: 'https://images.unsplash.com/photo-1699804368701-d52e876bf01a?q=80&w=986&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+  },
 ];
 
 // кнопка редактировать профиль
@@ -84,13 +87,13 @@ const profileNameText = document.querySelector(".profile__title");
 // поле, куда нужно вставить информацию "о разном"
 const profileJobText = document.querySelector(".profile__subtitle");
 // контейнер для карточек
-const cardContainer = document.querySelector(".card__container");
+const cardContainer = document.querySelector(".cards");
 // Шаблон карточки
 const cardTemplate = document.getElementById("cardTemplate").content.querySelector('.card');
 // кнопка""корзинка" для удаления картинки
 const deleteCard = document.querySelectorAll(".card__delete-button");
 
-// Обработка лайков
+ // Обработка лайков
 // вкл/выкл like
 function handleClickLikeButton(likeButton) {
   likeButton.classList.toggle("card__like_active");
@@ -168,16 +171,23 @@ document.addEventListener("click", function (event) {
 
 // Функция создания карточки
 function createCard(name, link) {
-  const cardElement = cardTemplate.cloneNode(true); // клонируем шаблон
+  const cardElement = cardTemplate.cloneNode(true); // .cloneNode(true)- клонируем шаблон с дочерними элементами(глубокое клонирование)
   cardElement.querySelector('.card__rectangle').src = link; // устанавливаем ссылку на изображение
   cardElement.querySelector('.card__rectangle').alt = name; // устанавливаем альтернативный текст изображения
   cardElement.querySelector('.card__caption').textContent = name; // устанавливаем название
+
+  // Находим кнопку лайка внутри карточки и добавляем обработчик клика
+  const likeButton = cardElement.querySelector('.card__like');
+  likeButton.addEventListener('click', () => {
+    likeButton.classList.toggle('card__like_active'); // переключаем класс card__like_active
+  });
+
   return cardElement;
 }
 
 // Функция добавления карточки в контейнер
 function addCardToContainer(cardElement) {
-  cardContainer.prepend(cardElement); // добавляем карточку в начало контейнера
+  cardContainer.prepend(cardElement); // .prepend- добавляем карточку в начало контейнера
 }
 
 // Обработчик отправки формы
