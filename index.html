@@ -119,7 +119,7 @@
     </div>
   </div>
   <!-- попап картинки popup_opened -->
-  <div class="popup">
+  <div class="popup" id="popupImage">
     <div class="popup__container">
       <button class="popup__close-button" type="button" aria-label="закрыть"></button>
       <img class="popup__img" src="" alt="изображение" />
@@ -129,7 +129,7 @@
   <!-- шаблон карточки-->
   <template id="cardTemplate">
     <figure class="card">
-      <img class="card__rectangle" src="" alt="" />
+      <img class="card__rectangle" src="" alt="" loading="lazy"/>
       <button class="card__delete-button" type="button" title="Удалить" aria-label="Удалить"></button>
       <div class="card__container">
         <h2 class="card__caption"></h2>

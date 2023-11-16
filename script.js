@@ -23,7 +23,8 @@ const initialCards = [
     name: 'meow',
     link: 'https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2F0fGVufDB8fDB8fHww'
   },
-     {name: 'лошадка',
+  {
+    name: 'лошадка',
     link: 'https://images.unsplash.com/photo-1577936861999-2ee541936e4b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
@@ -46,7 +47,7 @@ const initialCards = [
     name: 'this was a Hobbit hole',
     link: 'https://images.unsplash.com/photo-1575735409309-e0ecb6088fcd?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
-   {
+  {
     name: ')',
     link: 'https://plus.unsplash.com/premium_photo-1668723712387-d5076dae388e?q=80&w=1970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
@@ -92,8 +93,12 @@ const cardContainer = document.querySelector(".cards");
 const cardTemplate = document.getElementById("cardTemplate").content.querySelector('.card');
 // кнопка""корзинка" для удаления картинки
 const deleteCard = document.querySelectorAll(".card__delete-button");
+// Находим элемент изображения в попапе
+const popupImageElement = document.querySelector(".popup__img");
+// Находим элемент заголовка в попапе
+const popupTitleElement = document.querySelector(".popup__img-title");
 
- // Обработка лайков
+// Обработка лайков
 // вкл/выкл like
 function handleClickLikeButton(likeButton) {
   likeButton.classList.toggle("card__like_active");
@@ -168,19 +173,30 @@ document.addEventListener("click", function (event) {
   }
 });
 
+// Функция для открытия попапа с картинкой
+function openImagePopup(name, link) {
+  popupImageElement.src = link; // Устанавливаем ссылку на изображение
+  popupImageElement.alt = name; // Устанавливаем альтернативный текст
+  popupTitleElement.textContent = name; // Устанавливаем название изображения
+  popupImage.classList.add("popup_opened"); // Открываем попап
+}
 
 // Функция создания карточки
 function createCard(name, link) {
   const cardElement = cardTemplate.cloneNode(true); // .cloneNode(true)- клонируем шаблон с дочерними элементами(глубокое клонирование)
-  cardElement.querySelector('.card__rectangle').src = link; // устанавливаем ссылку на изображение
-  cardElement.querySelector('.card__rectangle').alt = name; // устанавливаем альтернативный текст изображения
-  cardElement.querySelector('.card__caption').textContent = name; // устанавливаем название
+  cardElement.querySelector(".card__rectangle").src = link; // устанавливаем ссылку на изображение
+  cardElement.querySelector(".card__rectangle").alt = name; // устанавливаем альтернативный текст изображения
+  cardElement.querySelector(".card__caption").textContent = name; // устанавливаем название
 
   // Находим кнопку лайка внутри карточки и добавляем обработчик клика
-  const likeButton = cardElement.querySelector('.card__like');
+  const likeButton = cardElement.querySelector(".card__like");
   likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle('card__like_active'); // переключаем класс card__like_active
+    likeButton.classList.toggle("card__like_active"); // переключаем класс card__like_active
   });
+
+  // кликабельная картинка, добавляем обработчик клика
+  const imageElement = cardElement.querySelector(".card__rectangle");
+  imageElement.addEventListener('click', () => openImagePopup(name, link));
 
   return cardElement;
 }
@@ -198,7 +214,6 @@ formElement.addEventListener('submit', function (evt) {
   const cardElement = createCard(cardName, cardURL); // создаём карточку
   addCardToContainer(cardElement); // добавляем карточку в контейнер
 });
-
 
 // Добавление начальных карточек из массива
 initialCards.forEach((card) => {
