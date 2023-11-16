@@ -1,9 +1,3 @@
-.popup__img {
-  display: block;
-  max-width: 816px;
-  max-height: 540px;
-}
-
 .popup__img-title {
   color: #fff;
   font-family: "Inter", Arial, sans-serif;

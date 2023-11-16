@@ -97,6 +97,10 @@ const deleteCard = document.querySelectorAll(".card__delete-button");
 const popupImageElement = document.querySelector(".popup__img");
 // Находим элемент заголовка в попапе
 const popupTitleElement = document.querySelector(".popup__img-title");
+// Элемент обертки попапа с картинкой
+const popupImage = document.getElementById("popupImage");
+// Форма добавления карточки
+const formAddCard = document.querySelector('.popup__form[name="formAddCard"]');
 
 // Обработка лайков
 // вкл/выкл like
@@ -157,41 +161,53 @@ document.addEventListener("keydown", (evt) => {
   }
 });
 
-// добавляем обработчик удаления картинки на корзинку
-document.addEventListener("click", function (event) {
-  // проверяет, является ли элемент элементом с классом ".card__delete-button"
-  // .matches-метод используется для проверки, соответствует ли элемент определённому CSS-селектору
-  // .target- идентификация элемента, вызвавшего событие
-  if (event.target.matches(".card__delete-button")) {
-    // если клик сделан по "корзинке", то находит ближайший элемент с классом ".element"
-    // .closest  используется для поиска ближайшего родительского элемента, который соответствует заданному CSS-селектору(начинает поиск вверх по иерархии)
-    const cardElement = event.target.closest(".card");
-    // карточка удаляется из dom
-    if (cardElement) {
-      cardElement.remove();
-    }
+
+// при нажатии на область вне картинки => она закрывается
+// добавляем обработчик на '.popup__container' в popupImage
+popupImage.addEventListener('click', (evt) => {
+  const popupContainer = popupImage.querySelector('.popup__container');
+  // проверяем, был ли клик внутри контейнера попапа
+  if (!popupContainer.contains(evt.target)) {
+    // закрываем попап
+    popupImage.classList.remove('popup_opened');
   }
 });
 
 // Функция для открытия попапа с картинкой
 function openImagePopup(name, link) {
-  popupImageElement.src = link; // Устанавливаем ссылку на изображение
-  popupImageElement.alt = name; // Устанавливаем альтернативный текст
-  popupTitleElement.textContent = name; // Устанавливаем название изображения
-  popupImage.classList.add("popup_opened"); // Открываем попап
+  // Устанавливаем ссылку на изображение
+  popupImageElement.src = link;
+  // Устанавливаем альтернативный текст
+  popupImageElement.alt = name;
+  // Устанавливаем название изображения
+  popupTitleElement.textContent = name;
+  // Открываем попап
+  popupImage.classList.add("popup_opened");
 }
 
 // Функция создания карточки
 function createCard(name, link) {
-  const cardElement = cardTemplate.cloneNode(true); // .cloneNode(true)- клонируем шаблон с дочерними элементами(глубокое клонирование)
-  cardElement.querySelector(".card__rectangle").src = link; // устанавливаем ссылку на изображение
-  cardElement.querySelector(".card__rectangle").alt = name; // устанавливаем альтернативный текст изображения
-  cardElement.querySelector(".card__caption").textContent = name; // устанавливаем название
+  // cloneNode(true)- клонируем шаблон с дочерними элементами(глубокое клонирование)
+  const cardElement = cardTemplate.cloneNode(true);
+  // устанавливаем ссылку на изображение
+  cardElement.querySelector(".card__rectangle").src = link;
+  // устанавливаем альтернативный текст изображения
+  cardElement.querySelector(".card__rectangle").alt = name;
+  // устанавливаем название
+  cardElement.querySelector(".card__caption").textContent = name;
+
+  // Находим кнопку удаления карточки и добавляем обработчик клика
+  const deleteButton = cardElement.querySelector(".card__delete-button");
+  deleteButton.addEventListener('click', () => {
+    // удаляем карточку к кототрой эта кнопка относится
+    deleteButton.closest(".card").remove();
+  });
 
   // Находим кнопку лайка внутри карточки и добавляем обработчик клика
   const likeButton = cardElement.querySelector(".card__like");
   likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle("card__like_active"); // переключаем класс card__like_active
+    // переключаем класс card__like_active
+    likeButton.classList.toggle("card__like_active");
   });
 
   // кликабельная картинка, добавляем обработчик клика
@@ -203,16 +219,22 @@ function createCard(name, link) {
 
 // Функция добавления карточки в контейнер
 function addCardToContainer(cardElement) {
-  cardContainer.prepend(cardElement); // .prepend- добавляем карточку в начало контейнера
+  // prepend - добавляем карточку в начало контейнера
+  cardContainer.prepend(cardElement);
 }
 
 // Обработчик отправки формы
 formElement.addEventListener('submit', function (evt) {
-  evt.preventDefault(); // предотвращаем стандартное поведение формы
-  const cardName = formElement.cardName.value; // берём название из поля формы
-  const cardURL = formElement.cardURL.value; // берём ссылку из поля формы
-  const cardElement = createCard(cardName, cardURL); // создаём карточку
-  addCardToContainer(cardElement); // добавляем карточку в контейнер
+  // предотвращаем стандартное поведение формы
+  evt.preventDefault();
+  // берём название из поля формы
+  const cardName = formElement.cardName.value;
+  // берём ссылку из поля формы
+  const cardURL = formElement.cardURL.value;
+  // создаём карточку
+  const cardElement = createCard(cardName, cardURL);
+  // добавляем карточку в контейнер
+  addCardToContainer(cardElement);
 });
 
 // Добавление начальных карточек из массива
@@ -221,4 +243,22 @@ initialCards.forEach((card) => {
 });
 
 
+formAddCard.addEventListener('submit', (evt) => {
+  // Предотвращаем стандартное поведение формы
+  evt.preventDefault();
 
+  // Получаем название карточки из формы
+  const cardName = formAddCard.querySelector('[name="cardName"]').value;
+  // Получаем ссылку на картинку из формы
+  const cardURL = formAddCard.querySelector('[name="cardURL"]').value;
+
+  // Создаем новую карточку
+  const newCard = createCard(cardName, cardURL);
+  // Добавляем новую карточку в начало контейнера карточек
+  cardContainer.prepend(newCard);
+
+  // Очищаем форму
+  formAddCard.reset();
+  // Закрываем попап
+  popupAddCard.classList.remove("popup_opened");
+});
