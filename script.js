@@ -78,11 +78,11 @@ const popupCloseButtons = document.querySelectorAll(".popup__close-button");
 // массив всех кнопок like
 const likeButtons = document.querySelectorAll(".card__like");
 // форма редактирования профиля И добавления карточки
-const formElement = document.querySelector(".popup__form");
+const formElement = document.forms.formEditProfile;
 // поле редактирования имени
-const nameInput = formElement.querySelector('[name="profileName"]');
+const nameInput = formElement.elements.profileName;
 // поле редактирования информации "о разном"
-const jobInput = formElement.querySelector('[name="profileAbout"]');
+const jobInput = formElement.elements.profileAbout;
 // поле, куда нужно вставить "имя"
 const profileNameText = document.querySelector(".profile__title");
 // поле, куда нужно вставить информацию "о разном"
@@ -100,7 +100,7 @@ const popupTitleElement = document.querySelector(".popup__img-title");
 // Элемент обертки попапа с картинкой
 const popupImage = document.getElementById("popupImage");
 // Форма добавления карточки
-const formAddCard = document.querySelector('.popup__form[name="formAddCard"]');
+const formAddCard = document.forms.formAddCard;
 
 // Обработка лайков
 // вкл/выкл like
@@ -165,9 +165,9 @@ document.addEventListener("keydown", (evt) => {
 // при нажатии на область вне картинки => она закрывается
 // добавляем обработчик на '.popup__container' в popupImage
 popupImage.addEventListener('click', (evt) => {
-  const popupContainer = popupImage.querySelector('.popup__container');
+  const popupImgContainer = popupImage.querySelector('.popup__image-container');
   // проверяем, был ли клик внутри контейнера попапа
-  if (!popupContainer.contains(evt.target)) {
+  if (!popupImgContainer.contains(evt.target)) {
     // закрываем попап
     popupImage.classList.remove('popup_opened');
   }
@@ -242,15 +242,15 @@ initialCards.forEach((card) => {
   addCardToContainer(createCard(card.name, card.link));
 });
 
-
+// Добавление новых карточек
 formAddCard.addEventListener('submit', (evt) => {
   // Предотвращаем стандартное поведение формы
   evt.preventDefault();
 
   // Получаем название карточки из формы
-  const cardName = formAddCard.querySelector('[name="cardName"]').value;
+  const cardName = formAddCard.elements.cardName.value;
   // Получаем ссылку на картинку из формы
-  const cardURL = formAddCard.querySelector('[name="cardURL"]').value;
+  const cardURL = formAddCard.elements.cardURL.value;
 
   // Создаем новую карточку
   const newCard = createCard(cardName, cardURL);
