@@ -3,3 +3,10 @@
   max-width: 75vh;
   max-height: 75vh;
 }
+
+@media screen and (max-width: 680px) {
+  .popup__img {
+    max-width: 22vh;
+    max-height: 28vh;
+      }
+}
