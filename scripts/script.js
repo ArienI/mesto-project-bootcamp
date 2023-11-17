@@ -76,13 +76,13 @@ const popupAddCard = document.getElementById("popupAddCard");
 // массив всех кнопок закрытия попапов
 const popupCloseButtons = document.querySelectorAll(".popup__close-button");
 // массив всех кнопок like
-const likeButtons = document.querySelectorAll(".card__like");
-// форма редактирования профиля И добавления карточки
-const formElement = document.forms.formEditProfile;
+// const likeButtons = document.querySelectorAll(".card__like");
+// форма редактирования профиля
+const formProfile = document.forms.formEditProfile;
 // поле редактирования имени
-const nameInput = formElement.elements.profileName;
+const nameInput = formProfile.elements.profileName;
 // поле редактирования информации "о разном"
-const jobInput = formElement.elements.profileAbout;
+const jobInput = formProfile.elements.profileAbout;
 // поле, куда нужно вставить "имя"
 const profileNameText = document.querySelector(".profile__title");
 // поле, куда нужно вставить информацию "о разном"
@@ -91,7 +91,7 @@ const profileJobText = document.querySelector(".profile__subtitle");
 const cardContainer = document.querySelector(".cards");
 // Шаблон карточки
 const cardTemplate = document.getElementById("cardTemplate").content.querySelector('.card');
-// кнопка""корзинка" для удаления картинки
+// кнопка "корзинка" для удаления картинки
 const deleteCard = document.querySelectorAll(".card__delete-button");
 // Находим элемент изображения в попапе
 const popupImageElement = document.querySelector(".popup__img");
@@ -102,76 +102,36 @@ const popupImage = document.getElementById("popupImage");
 // Форма добавления карточки
 const formAddCard = document.forms.formAddCard;
 
-// Обработка лайков
-// вкл/выкл like
-function handleClickLikeButton(likeButton) {
-  likeButton.classList.toggle("card__like_active");
+function openPopup(popup) {
+  // Открываем попап
+  popup.classList.add("popup_opened");
+  // Вешаем обработчик на нажатие Escape
+  document.addEventListener('keydown', handleEscape);
 }
-// проходимся в цикле по всем кнопкам like и вешаем на них обработчик
-likeButtons.forEach((likeButton) => {
-  likeButton.addEventListener("click", () => handleClickLikeButton(likeButton));
-});
 
-// на кнопку редактирования профиля вешаем обработчик который будет открывать попап
-editProfileButton.addEventListener("click", () => {
-  nameInput.value = profileNameText.textContent;
-  jobInput.value = profileJobText.textContent;
-  popupProfile.classList.add("popup_opened");
-});
+function closePopup(popup) {
+  // Закрываем попап
+  popup.classList.remove("popup_opened");
+  // Не забываем удалить обработчик на нажатие Escape
+  document.removeEventListener('keydown', handleEscape);
+}
 
-// на кнопку добавления карточки вешаем обработчик который будет открывать попап
-addPhotoButton.addEventListener("click", () => {
-  popupAddCard.classList.add("popup_opened");
-});
+function handleEscape(evt) {
+  // Если нажата Escape, закрываем popup
+  if (evt.key === "Escape") {
+    closePopup(document.querySelector('.popup_opened'));
+  }
+}
 
-// вешаем обработчки закрытия попапов на все крестики сразу
-popupCloseButtons.forEach((popupCloseButton) => {
-  // находим родительский попап текущей кнопки
-  const popupParent = popupCloseButton.closest(".popup");
-  // вешаем на текущую кнопку обработчик который будет закрывать её родительский попап
-  popupCloseButton.addEventListener("click", () => {
-    popupParent.classList.remove("popup_opened");
-  });
-});
-
-// обработчик "отправки" формы
-function handleFormSubmit(evt) {
+// обработчик "отправки" формы профиля
+function handleFormSubmitProfile(evt) {
   // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
   evt.preventDefault();
   // Вставьте новые значения с помощью textContent
   profileNameText.textContent = nameInput.value;
   profileJobText.textContent = jobInput.value;
-  popupProfile.classList.remove("popup_opened");
+  closePopup(popupProfile);
 }
-// Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-formElement.addEventListener("submit", handleFormSubmit);
-
-// при нажатии на Escape открытый попап должен закрываться
-// добавляем обработчик событий на весь документ
-document.addEventListener("keydown", (evt) => {
-  // проверяем, является ли нажатая клавиша Esc
-  if (evt.key === "Escape") {
-    // ищет элемент с классом .popup_opened
-    const openedPopup = document.querySelector(".popup_opened");
-    //  если находит, то условие выполняется
-    if (openedPopup) {
-      // удалем .popup_opened у найденого элемента
-      openedPopup.classList.remove("popup_opened");
-    }
-  }
-});
-
-
-// при нажатии на область вне картинки => она закрывается
-// добавляем обработчик на '.popup__container' в popupImage
-popupImage.addEventListener('click', (evt) => {
-  const popupImgContainer = popupImage.querySelector('.popup__image-container');
-  // проверяем, был ли клик внутри контейнера попапа
-  if (!popupImgContainer.contains(evt.target)) {
-    // закрываем попап
-    popupImage.classList.remove('popup_opened');
-  }
-});
 
 // Функция для открытия попапа с картинкой
 function openImagePopup(name, link) {
@@ -182,17 +142,19 @@ function openImagePopup(name, link) {
   // Устанавливаем название изображения
   popupTitleElement.textContent = name;
   // Открываем попап
-  popupImage.classList.add("popup_opened");
+  openPopup(popupImage);
 }
 
 // Функция создания карточки
 function createCard(name, link) {
   // cloneNode(true)- клонируем шаблон с дочерними элементами(глубокое клонирование)
   const cardElement = cardTemplate.cloneNode(true);
+
+  const imageElement = cardElement.querySelector(".card__rectangle");
   // устанавливаем ссылку на изображение
-  cardElement.querySelector(".card__rectangle").src = link;
+  imageElement.src = link;
   // устанавливаем альтернативный текст изображения
-  cardElement.querySelector(".card__rectangle").alt = name;
+  imageElement.alt = name;
   // устанавливаем название
   cardElement.querySelector(".card__caption").textContent = name;
 
@@ -211,7 +173,6 @@ function createCard(name, link) {
   });
 
   // кликабельная картинка, добавляем обработчик клика
-  const imageElement = cardElement.querySelector(".card__rectangle");
   imageElement.addEventListener('click', () => openImagePopup(name, link));
 
   return cardElement;
@@ -223,18 +184,40 @@ function addCardToContainer(cardElement) {
   cardContainer.prepend(cardElement);
 }
 
-// Обработчик отправки формы
-formElement.addEventListener('submit', function (evt) {
-  // предотвращаем стандартное поведение формы
-  evt.preventDefault();
-  // берём название из поля формы
-  const cardName = formElement.cardName.value;
-  // берём ссылку из поля формы
-  const cardURL = formElement.cardURL.value;
-  // создаём карточку
-  const cardElement = createCard(cardName, cardURL);
-  // добавляем карточку в контейнер
-  addCardToContainer(cardElement);
+// на кнопку редактирования профиля вешаем обработчик который будет открывать попап
+editProfileButton.addEventListener("click", () => {
+  nameInput.value = profileNameText.textContent;
+  jobInput.value = profileJobText.textContent;
+  openPopup(popupProfile);
+});
+
+// на кнопку добавления карточки вешаем обработчик который будет открывать попап
+addPhotoButton.addEventListener("click", () => {
+  openPopup(popupAddCard);
+});
+
+// вешаем обработчки закрытия попапов на все крестики сразу
+popupCloseButtons.forEach((popupCloseButton) => {
+  // находим родительский попап текущей кнопки
+  const popupParent = popupCloseButton.closest(".popup");
+  // вешаем на текущую кнопку обработчик который будет закрывать её родительский попап
+  popupCloseButton.addEventListener("click", () => {
+    closePopup(popupParent);
+  });
+});
+
+// Прикрепляем обработчик к форме: он будет следить за событием "submit" - «отправка»
+formProfile.addEventListener("submit", handleFormSubmitProfile);
+
+// при нажатии на область вне картинки => она закрывается
+// добавляем обработчик на '.popup__container' в popupImage
+popupImage.addEventListener('click', (evt) => {
+  const popupImgContainer = popupImage.querySelector('.popup__image-container');
+  // проверяем, был ли клик внутри контейнера попапа
+  if (!popupImgContainer.contains(evt.target)) {
+    // закрываем попап
+    closePopup(popupImage);
+  }
 });
 
 // Добавление начальных карточек из массива
@@ -242,7 +225,7 @@ initialCards.forEach((card) => {
   addCardToContainer(createCard(card.name, card.link));
 });
 
-// Добавление новых карточек
+// Обработчик отправки формы создания карточки
 formAddCard.addEventListener('submit', (evt) => {
   // Предотвращаем стандартное поведение формы
   evt.preventDefault();
@@ -260,5 +243,5 @@ formAddCard.addEventListener('submit', (evt) => {
   // Очищаем форму
   formAddCard.reset();
   // Закрываем попап
-  popupAddCard.classList.remove("popup_opened");
+  closePopup(popupAddCard);
 });
