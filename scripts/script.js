@@ -58,6 +58,29 @@ function handleEscape(evt) {
   }
 }
 
+//при клике на область вне формы "редактирования профиля" => она закрывается
+// добавляем обработчик на '.popup__container'
+popupProfile.addEventListener('click', (evt) => {
+  const popupProfileConteiner = popupProfile.querySelector(".popup__container ");
+  // проверяем, был ли клик внутри контейнера попапа
+  if (!popupProfileConteiner.contains(evt.target)) {
+    // закрываем попап
+    closePopup(popupProfile);
+  }
+})
+
+// при клике на область вне формы "новое место" => она закрывается
+// добавляем обработчик на '.popup__container'
+popupAddCard.addEventListener('click', (evt) => {
+  const popupAddCardContainer = popupAddCard.querySelector('.popup__container');
+  // проверяем, был ли клик внутри контейнера попапа
+  if (!popupAddCardContainer.contains(evt.target)) {
+    // закрываем попап
+    closePopup(popupAddCard);
+  }
+});
+
+
 // обработчик "отправки" формы профиля
 function handleFormSubmitProfile(evt) {
   // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки.
@@ -136,7 +159,7 @@ popupCloseButtons.forEach((popupCloseButton) => {
   // находим родительский попап текущей кнопки
   const popupParent = popupCloseButton.closest(".popup");
   // вешаем на текущую кнопку обработчик который будет закрывать её родительский попап
-  popupCloseButton.addEventListener("click", () => {
+  popupCloseButton.addEventListener('click', () => {
     closePopup(popupParent);
   });
 });
@@ -147,7 +170,7 @@ formProfile.addEventListener("submit", handleFormSubmitProfile);
 // при нажатии на область вне картинки => она закрывается
 // добавляем обработчик на '.popup__container' в popupImage
 popupImage.addEventListener('click', (evt) => {
-  const popupImgContainer = popupImage.querySelector('.popup__image-container');
+  const popupImgContainer = popupImage.querySelector(".popup__image-container");
   // проверяем, был ли клик внутри контейнера попапа
   if (!popupImgContainer.contains(evt.target)) {
     // закрываем попап
