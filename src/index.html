@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Место" />
+  <meta name="keywords" content="фото, галерея, Место" />
+  <meta name="author" content="Полухина Ирина" />
+  <link rel="icon" href="./images/Untitled-2023-10-24-1524.svg" type="image/x-icon" />
+  <link rel="icon" href="./images/favicon-16x16.png" type="image/png" sizes="16x16" />
+  <link rel="icon" href="./images/favicon-32x32.png" type="image/png" sizes="32x32" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./images/android-chrome-192x192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./images/android-chrome-512x512.png" />
+  <link rel="apple-touch-icon" href="./images/apple-touch-icon.png" />
+  <link rel="stylesheet" href="./pages/index.css" />
+  <title>Место</title>
+
+  <script src="./components/index.js" type="module" defer></script>
+</head>
+
+<body class="page">
+  <header class="header">
+    <img class="header__logo" src="./images/logo.svg" alt="Место" />
+  </header>
+  <main>
+    <section class="profile">
+      <div class="profile__avatar">
+        <img src="./images/ava.jpeg" class="profile__avatar-image" alt="Аватар" />
+      </div>
+      <div class="profile__info">
+        <div class="profile__edit">
+          <h1 class="profile__title">Arien the Cat</h1>
+          <button class="profile__button-edit" type="button" title="редактировать"
+            aria-label="открыть окно редактирования профиля"></button>
+        </div>
+        <p class="profile__subtitle">Житель Земли</p>
+      </div>
+      <button class="profile__button-add-photo" type="button" title="добавить фото"
+        aria-label="открыть окно добавления фото"></button>
+    </section>
+    <section class="cards"></section>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2023 Mesto Russia</p>
+  </footer>
+  <div class="popup" id="popupProfile">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button" aria-label="закрыть попап" title="закрыть"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__form" id="form" name="formEditProfile" method="POST" novalidate>
+        <input type="text" id="profileName" class="popup__input" name="profileName" placeholder="Имя пользователя"
+          minlength="2" maxlength="40" required />
+        <span id="error-profileName" class="error-message"></span>
+        <input type="text" id="profileAbout" class="popup__input" name="profileAbout" placeholder="О себе" minlength="2"
+          maxlength="200" required />
+        <span id="error-profileAbout" class="error-message"></span>
+        <button type="submit" class="popup__button" aria-label="Сохранить">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="popup" id="popupAddCard">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button" aria-label="закрыть попап" title="закрыть"></button>
+      <h2 class="popup__form-title">Новое место</h2>
+      <form class="popup__form" name="formAddCard" novalidate>
+        <input type="text" placeholder="название" class="popup__input" name="cardName" id="cardName" minlength="2"
+          maxlength="30" required />
+        <span id="error-cardName" class="error-message"></span>
+        <input type="url" placeholder="ссылка на картинку" class="popup__input" name="cardURL" id="cardURL" required />
+        <span id="error-cardURL" class="error-message"></span>
+        <button type="submit" class="popup__button" aria-label="сохранить">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- попап картинки popup_opened -->
+  <div class="popup" id="popupImage">
+    <div class="popup__image-container">
+      <button class="popup__close-button" type="button" aria-label="закрыть"></button>
+      <img class="popup__img" src="" alt="изображение" />
+      <p class="popup__img-title"></p>
+    </div>
+  </div>
+  <!-- шаблон карточки-->
+  <template id="cardTemplate">
+    <figure class="card">
+      <img class="card__rectangle" src="" alt="" loading="lazy" />
+      <button class="card__delete-button" type="button" title="Удалить" aria-label="Удалить"></button>
+      <div class="card__container">
+        <h2 class="card__caption"></h2>
+        <button type="button" class="card__like"></button>
+      </div>
+    </figure>
+  </template>
+</body>
+
+</html>

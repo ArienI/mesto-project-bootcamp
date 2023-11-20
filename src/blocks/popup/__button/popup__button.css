@@ -14,6 +14,7 @@
   cursor: pointer;
   margin-top: 18px;
 }
+
 @media (max-width: 680px) {
   .popup__button {
     margin-top: 15px;
@@ -21,6 +22,7 @@
     font-size: 14px;
   }
 }
+
 .popup__button:hover {
   opacity: 0.8;
   transition: 1s;
@@ -30,4 +32,6 @@
   background-color: #f6f6f6;
   color: #000;
   cursor: auto;
+  border: 1px solid #000;
+  opacity: 0.15;
 }

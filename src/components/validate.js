@@ -1,13 +1,8 @@
-// форма редактирования профиля
-// const form = document.forms['formEditProfile']
-// console.log(form);
-
 // функция, которая прячет ошибку
 function hideError(inputField, validationConfig) {
   const spanId = 'error-' + inputField.id;
   const spanElement = document.getElementById(spanId);
   spanElement.textContent = '';
-  spanElement.textContent = errorMessage;
   inputField.classList.remove(validationConfig.inputInvalidClass)
 }
 
@@ -36,13 +31,13 @@ function handleInput(inputElement, validationConfig) {
 
 // получаем кнопку для включения
 function enableButton(button) {
-  // disabled- атрибут делающий кнопку неактивной
+  // disabled - атрибут делающий кнопку неактивной
   button.disabled = false
 }
 
 // получаем кнопку для выключения
 export function disableButton(button) {
-  // disabled- атрибут делающий кнопку неактивной
+  // disabled - атрибут делающий кнопку неактивной
   button.disabled = true
 }
 
@@ -67,8 +62,6 @@ export function resetError(form, validationConfig) {
     hideError(input, validationConfig);
   });
 };
-
-
 
 // функция активирующая валидацию всех форм нашего приложения
 export function enableValidation(validationConfig) {
