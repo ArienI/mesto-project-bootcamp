@@ -7,26 +7,23 @@
   <meta name="description" content="Место" />
   <meta name="keywords" content="фото, галерея, Место" />
   <meta name="author" content="Полухина Ирина" />
-  <link rel="icon" href="./images/Untitled-2023-10-24-1524.svg" type="image/x-icon" />
-  <link rel="icon" href="./images/favicon-16x16.png" type="image/png" sizes="16x16" />
-  <link rel="icon" href="./images/favicon-32x32.png" type="image/png" sizes="32x32" />
-  <link rel="icon" type="image/png" sizes="192x192" href="./images/android-chrome-192x192.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="./images/android-chrome-512x512.png" />
-  <link rel="apple-touch-icon" href="./images/apple-touch-icon.png" />
-  <link rel="stylesheet" href="./pages/index.css" />
+  <link rel="icon" href="<%=require('./images/Untitled-2023-10-24-1524.svg')%>" type="image/x-icon" />
+  <link rel="icon" href="<%=require('./images/favicon-16x16.png')%>" type="image/png" sizes="16x16" />
+  <link rel="icon" href="<%=require('./images/favicon-32x32.png')%>" type="image/png" sizes="32x32" />
+  <link rel="icon" href="<%=require('./images/android-chrome-192x192.png')%>" type="image/png" sizes="192x192" />
+  <link rel="icon" href="<%=require('./images/android-chrome-512x512.png')%>" type="image/png" sizes="512x512" />
+  <link rel="apple-touch-icon" href="<%=require('./images/apple-touch-icon.png')%>" />
   <title>Место</title>
-
-  <script src="./components/index.js" type="module" defer></script>
 </head>
 
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/logo.svg" alt="Место" />
+    <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Место" />
   </header>
   <main>
     <section class="profile">
       <div class="profile__avatar">
-        <img src="./images/ava.jpeg" class="profile__avatar-image" alt="Аватар" />
+        <img src="<%=require('./images/ava.jpeg')%>" class="profile__avatar-image" alt="Аватар" />
       </div>
       <div class="profile__info">
         <div class="profile__edit">

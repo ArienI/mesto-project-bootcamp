@@ -1,3 +1,4 @@
+import '../pages/index.css';
 import { initialCards } from './utils.js';
 import { createCard, addCardToContainer } from './card.js';
 import { openPopup, closePopup } from './modal.js';
