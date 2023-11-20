@@ -1,0 +1,24 @@
+.error-message {
+  display: block;
+  width: 358px;
+  color: #f00;
+  font-size: 12px;
+  line-height: 15px; /*высота всей строки*/
+  transition: 0.3s;
+  padding: 0px;
+  min-height: 30px; /*на две строки*/
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media (max-width: 680px) {
+  .error-message {
+    max-width: 238px;
+  }
+}
+
+.input__text_invalid {
+  border-color: #ff3333;
+}

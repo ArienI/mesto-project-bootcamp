@@ -15,3 +15,7 @@
     max-width: 238px;
   }
 }
+
+.popup__input_invalid {
+  border-color: rgba(255, 0, 0, 1);
+}
