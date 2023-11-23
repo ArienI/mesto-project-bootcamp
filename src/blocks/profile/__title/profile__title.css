@@ -1,6 +1,6 @@
 .profile__title {
   max-width: 294px;
-  font-size: 42px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 500;
   line-height: 48px;
@@ -12,12 +12,28 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  /**/
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+h1 {
+
+
+  text-transform: uppercase;
+  background-image: url(https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMngxOWlhdHg4enJ1ZG5ocmpqZ2gzb2Q3ZHlhYjlwOWdhazIyY2lweCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8QiD3u639scE243ChX/giphy.gif);
+  background-size: cover;
+  color: transparent;
+  -moz-background-clip: text;
+  -webkit-background-clip: text;
+}
+
 @media screen and (max-width: 680px) {
-    .profile__title {
-        font-size: 27px;
-        text-align: center;
-        line-height: normal;
-        margin-right: 10px;
-      }
+  .profile__title {
+    font-size: 27px;
+    text-align: center;
+    line-height: normal;
+    margin-right: 10px;
+  }
 }
