@@ -52,7 +52,7 @@ function checkForm(form, button) {
 }
 
 
-//функция очистки формы при перезвгрузке
+/*//функция очистки формы при перезвгрузке
 export function resetError(form, validationConfig) {
   const inputList = form.querySelectorAll(validationConfig.inputSelector); // нашли все input
   const submitButton = form.querySelector(validationConfig.submitSelector); // нашли кнопку (/и?)
@@ -61,7 +61,7 @@ export function resetError(form, validationConfig) {
     //установили слушатель
     hideError(input, validationConfig);
   });
-};
+};*/
 
 // функция активирующая валидацию всех форм нашего приложения
 export function enableValidation(validationConfig) {

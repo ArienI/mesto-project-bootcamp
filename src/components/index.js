@@ -7,7 +7,7 @@ import { enableValidation } from "./validate.js";
 // кнопка редактировать профиль
 const editProfileButton = document.querySelector(".profile__button-edit");
 //кнопка добавить картинку
-const addPhotoButton = document.querySelector(".profile__button-add-photo");
+const imageAddButton = document.querySelector(".profile__button-add-photo");
 // попап редактирования профиля
 const popupProfile = document.getElementById("popupProfile");
 // попап добавления карточки
@@ -47,33 +47,32 @@ editProfileButton.addEventListener("click", () => {
 });
 
 // на кнопку добавления карточки вешаем обработчик который будет открывать попап
-addPhotoButton.addEventListener("click", () => {
+imageAddButton.addEventListener("click", () => {
   openPopup(popupAddCard);
 });
 
 // вешаем обработчки закрытия попапов на все крестики сразу
-popupCloseButtons.forEach((popupCloseButton) => {
+popupCloseButtons.forEach(popupCloseButton => {
   // находим родительский попап текущей кнопки
   const popupParent = popupCloseButton.closest(".popup");
   // вешаем на текущую кнопку обработчик который будет закрывать её родительский попап
-  popupCloseButton.addEventListener('click', () => {
-    closePopup(popupParent);
+  popupCloseButton.addEventListener('click', () =>
+    closePopup(popupParent));
+
+  // Закрытие попапа при клике вне его содержимого
+  //  обработчик событий на весь попап срабатывает при нажатии кнопки мыши в любом месте попапа
+  popupParent.addEventListener('mousedown', (evt) => {
+    //проверяем был ли сделан клик на событии, к которому привязан обрабочик
+    if (evt.target === evt.currentTarget) {
+      //если условие выполняется, то закрываем popup
+      closePopup(popupParent);
+    }
   });
 });
 
 // Прикрепляем обработчик к форме: он будет следить за событием "submit" - «отправка»
 formProfile.addEventListener("submit", handleFormSubmitProfile);
 
-// при нажатии на область вне картинки => она закрывается
-// добавляем обработчик на '.popup__container' в popupImage
-popupImage.addEventListener('click', (evt) => {
-  const popupImgContainer = popupImage.querySelector(".popup__image-container");
-  // проверяем, был ли клик внутри контейнера попапа
-  if (!popupImgContainer.contains(evt.target)) {
-    // закрываем попап
-    closePopup(popupImage);
-  }
-});
 
 // Добавление начальных карточек из массива
 initialCards.forEach((card) => {
@@ -97,6 +96,8 @@ formAddCard.addEventListener('submit', (evt) => {
 
   // Очищаем форму
   formAddCard.reset();
+  // деактивируем кнопку сохранения
+  evt.submitter.disabled = true;
   // Закрываем попап
   closePopup(popupAddCard);
 });
