@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import { initialCards } from './utils.js';
-import { createCard, addCardToContainer } from './card.js';
+import { createCard } from './card.js';
 import { openPopup, closePopup } from './modal.js';
 import { enableValidation } from "./validate.js";
 
@@ -24,10 +24,10 @@ const jobInput = formProfile.elements.profileAbout;
 const profileNameText = document.querySelector(".profile__title");
 // поле, куда нужно вставить информацию "о разном"
 const profileJobText = document.querySelector(".profile__subtitle");
-// Элемент обертки попапа с картинкой
-const popupImage = document.getElementById("popupImage");
 // Форма добавления карточки
 const formAddCard = document.forms.formAddCard;
+// контейнер для карточек
+const cardContainer = document.querySelector(".cards");
 
 // обработчик "отправки" формы профиля
 function handleFormSubmitProfile(evt) {
@@ -37,6 +37,19 @@ function handleFormSubmitProfile(evt) {
   profileNameText.textContent = nameInput.value;
   profileJobText.textContent = jobInput.value;
   closePopup(popupProfile);
+}
+
+// Функция добавления карточки в контейнер
+function addCardToContainer(cardElement) {
+  // prepend - добавляем карточку в начало контейнера
+  cardContainer.prepend(cardElement);
+}
+
+function handleOverlayClick(evt) {
+  // Если нажата Escape, закрываем popup
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.target);
+  }
 }
 
 // на кнопку редактирования профиля вешаем обработчик который будет открывать попап
@@ -60,19 +73,12 @@ popupCloseButtons.forEach(popupCloseButton => {
     closePopup(popupParent));
 
   // Закрытие попапа при клике вне его содержимого
-  //  обработчик событий на весь попап срабатывает при нажатии кнопки мыши в любом месте попапа
-  popupParent.addEventListener('mousedown', (evt) => {
-    //проверяем был ли сделан клик на событии, к которому привязан обрабочик
-    if (evt.target === evt.currentTarget) {
-      //если условие выполняется, то закрываем popup
-      closePopup(popupParent);
-    }
-  });
+  // обработчик событий на весь попап срабатывает при нажатии кнопки мыши в любом месте попапа
+  popupParent.addEventListener('mousedown', handleOverlayClick);
 });
 
 // Прикрепляем обработчик к форме: он будет следить за событием "submit" - «отправка»
 formProfile.addEventListener("submit", handleFormSubmitProfile);
-
 
 // Добавление начальных карточек из массива
 initialCards.forEach((card) => {

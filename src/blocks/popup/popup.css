@@ -13,7 +13,3 @@
   opacity: 0;
   transition: visibility 0.4s linear, opacity 0.4s ease-in;
 }
-
-.popup.popup__image-background {
-  background: rgba(0, 0, 0, .9);
-}

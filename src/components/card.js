@@ -2,8 +2,6 @@ import { openImagePopup } from './modal.js';
 
 // Шаблон карточки
 const cardTemplate = document.getElementById("cardTemplate").content.querySelector('.card');
-// контейнер для карточек
-const cardContainer = document.querySelector(".cards");
 
 // Функция создания карточки
 function createCard(name, link) {
@@ -22,7 +20,7 @@ function createCard(name, link) {
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener('click', () => {
     // удаляем карточку к кототрой эта кнопка относится
-    deleteButton.closest(".card").remove();
+    cardElement.remove();
   });
 
   // Находим кнопку лайка внутри карточки и добавляем обработчик клика
@@ -38,10 +36,4 @@ function createCard(name, link) {
   return cardElement;
 }
 
-// Функция добавления карточки в контейнер
-function addCardToContainer(cardElement) {
-  // prepend - добавляем карточку в начало контейнера
-  cardContainer.prepend(cardElement);
-}
-
-export { createCard, addCardToContainer };
+export { createCard };

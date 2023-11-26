@@ -9,21 +9,6 @@
   text-overflow: ellipsis;
   margin: 0;
   padding-top: 16px;
-  /**/
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-p {
-
-
-  text-transform: uppercase;
-  background-image: url(https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMngxOWlhdHg4enJ1ZG5ocmpqZ2gzb2Q3ZHlhYjlwOWdhazIyY2lweCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8QiD3u639scE243ChX/giphy.gif);
-  background-size: cover;
-  color: transparent;
-  -moz-background-clip: text;
-  -webkit-background-clip: text;
 }
 
 @media screen and (max-width: 680px) {
