@@ -30,7 +30,7 @@ export const getUserInfo = () => {
     // запрос для получения даннных с сервера, без каких-либо изменений 
     method: 'GET'
   })
-    // Обработка ответа:
+    // обработка ответа, проверка на ошибки
     .then(handleResponse)
     .then(data => {
       // обновление данных пользователя
@@ -42,11 +42,13 @@ export const getUserInfo = () => {
     .catch(err => console.log(err));
 }
 
+// Загрузка карточек с сервера
 export const getCard = () => {
   return fetch('https://nomoreparties.co/v1/wbf-cohort-14/cards ', {
     headers: config.headers,
     method: 'GET'
   })
+    // обработка ответа, проверка на ошибки
     .then(handleResponse)
     .then(cards => {
       document.getElementById('nameCard').textContent = cards.name;
@@ -54,3 +56,21 @@ export const getCard = () => {
     });
 }
 
+// редактирование профиля
+export const updateUserInfo = (name, about) => {
+  return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me', {
+    headers: config.headers,
+    method: 'PATCH',
+    body: JSON.stringify({
+      name: name,
+      about: about
+    })
+  })
+    // обработка ответа, проверка на ошибки
+    .then(handleResponse)
+    .then(updatedUserData => {
+      document.getElementById('name').textContent = updatedUserData.name;
+      document.getElementById('about').textContent = updatedUserData.about;
+    })
+    .catch(err => console.log(err));
+};
