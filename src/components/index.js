@@ -3,6 +3,7 @@ import { initialCards } from './utils.js';
 import { createCard } from './card.js';
 import { openPopup, closePopup } from './modal.js';
 import { enableValidation } from "./validate.js";
+import { getUserInfo } from "./api.js";
 
 // кнопка редактировать профиль
 const editProfileButton = document.querySelector(".profile__button-edit");
@@ -117,3 +118,20 @@ const validationConfig = {
 }
 
 enableValidation(validationConfig);
+
+// вызываем для получения данных
+getUserInfo()
+  // обрабатываем данные, после их получения
+  .then((data) => {
+    // здесь перебираем и обрабатываем каждый элемент данных
+    data.forEach((item) => {
+      // создаем новую карточку для каждого элемента
+      const newCard = createItem(item);
+      // добавляем карточку в список или на страницу
+      addItem(newCard);
+    });
+  })
+  .catch((err) => {
+    // Если произошла ошибка, выводим информацию об ошибке в консоль
+    console.log(err);
+  });
