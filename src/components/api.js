@@ -31,5 +31,14 @@ export const getUserInfo = () => {
     method: 'GET'
   })
     // Обработка ответа:
-    .then(handleResponse);
+    .then(handleResponse)
+    .then(data => {
+      // обновление данных пользователя
+      // меняем на элементы с моей страницы
+      document.getElementById('name').textContent = data.name;
+      document.getElementById('about').textContent = data.about;
+      document.getElementById('avatar').src = data.avatar;
+      // Использование _id пользователя по необходимости
+    })
+    .catch(err => console.log(err));
 }

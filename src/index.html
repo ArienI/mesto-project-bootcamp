@@ -23,15 +23,15 @@
   <main>
     <section class="profile">
       <div class="profile__avatar">
-        <img src="<%=require('./images/ava.jpeg')%>" class="profile__avatar-image" alt="Аватар">
+        <img src="<%=require('./images/ava.jpeg')%>" id="avatar" class="profile__avatar-image" alt="Аватар">
       </div>
       <div class="profile__info">
         <div class="profile__edit">
-          <h1 class="profile__title">Arien the Cat</h1>
+          <h1 class="profile__title" id="name">Arien the Cat</h1>
           <button class="profile__button-edit" type="button" title="редактировать"
             aria-label="открыть окно редактирования профиля"></button>
         </div>
-        <p class="profile__subtitle">Житель Земли</p>
+        <p class="profile__subtitle" id="about">Житель Земли</p>
       </div>
       <button class="profile__button-add-photo" type="button" title="добавить фото"
         aria-label="открыть окно добавления фото"></button>
