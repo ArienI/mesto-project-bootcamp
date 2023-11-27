@@ -38,7 +38,19 @@ export const getUserInfo = () => {
       document.getElementById('name').textContent = data.name;
       document.getElementById('about').textContent = data.about;
       document.getElementById('avatar').src = data.avatar;
-      // Использование _id пользователя по необходимости
     })
     .catch(err => console.log(err));
 }
+
+export const getCard = () => {
+  return fetch('https://nomoreparties.co/v1/wbf-cohort-14/cards ', {
+    headers: config.headers,
+    method: 'GET'
+  })
+    .then(handleResponse)
+    .then(cards => {
+      document.getElementById('nameCard').textContent = cards.name;
+      document.getElementById('linkCard').src = cards.link;
+    });
+}
+
