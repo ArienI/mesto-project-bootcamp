@@ -46,21 +46,21 @@ export const getUserInfo = () => {
 export const getCard = () => {
   return fetch('https://nomoreparties.co/v1/wbf-cohort-14/cards ', {
     headers: config.headers,
+    // запрос для получения даннных с сервера, без каких-либо изменений 
     method: 'GET'
   })
     // обработка ответа, проверка на ошибки
     .then(handleResponse)
-    .then(cards => {
-      document.getElementById('nameCard').textContent = cards.name;
-      document.getElementById('linkCard').src = cards.link;
-    });
+
 }
 
 // редактирование профиля
 export const updateUserInfo = (name, about) => {
   return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me', {
     headers: config.headers,
+    // частичное обнавление данных на сервере
     method: 'PATCH',
+    // делаем из объекта строку
     body: JSON.stringify({
       name: name,
       about: about
@@ -71,6 +71,25 @@ export const updateUserInfo = (name, about) => {
     .then(updatedUserData => {
       document.getElementById('name').textContent = updatedUserData.name;
       document.getElementById('about').textContent = updatedUserData.about;
+    })
+    .catch(err => console.log(err));
+};
+
+
+export const updateAvatar = (avatarLink) => {
+  return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me/avatar', {
+    // частичное обнавление данных на сервере
+    method: 'PATCH',
+    headers: config.headers,
+    // делаем из объекта строку
+    body: JSON.stringify({
+      avatar: avatarLink
+    })
+  })
+    // обработка ответа, проверка на ошибки
+    .then(handleResponse)
+    .then(updatedUserData => {
+      document.getElementById('avatar').src = updatedUserData.avatar;
     })
     .catch(err => console.log(err));
 };
