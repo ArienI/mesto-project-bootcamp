@@ -1,5 +1,5 @@
 const config = {
-  baseUrl: 'https://mesto.nomoreparties.co',
+  baseUrl: 'https://mesto.nomoreparties.co/v1/wbf-cohort-14/',
   headers: {
     // заголовок авторизации, токен
     authorization: '3dbc5122-5e98-455c-88e1-ae0a88f55f6c',
@@ -24,7 +24,7 @@ function handleResponse(res) {
 export const getUserInfo = () => {
   // Отправка HTTP-запроса
   // fetch- отправляем запрос
-  return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me', {
+  return fetch(`${config.baseUrl}users/me`, {
     // Заголовки запроса
     headers: config.headers,
     // запрос для получения даннных с сервера, без каких-либо изменений 
@@ -44,19 +44,32 @@ export const getUserInfo = () => {
 
 // Загрузка карточек с сервера
 export const getCard = () => {
-  return fetch('https://nomoreparties.co/v1/wbf-cohort-14/cards ', {
+  return fetch(`${config.baseUrl}cards`, {
     headers: config.headers,
     // запрос для получения даннных с сервера, без каких-либо изменений 
     method: 'GET'
   })
     // обработка ответа, проверка на ошибки
     .then(handleResponse)
-
 }
+
+//  добавление новой карточки
+export const addCard = (name, link) => {
+  return fetch(`${config.baseUrl}cards`, {
+    // method: 'POST'- отправка данных на сервер  
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: name,
+      link: link
+    })
+  })
+    .then(handleResponse);
+};
 
 // редактирование профиля
 export const updateUserInfo = (name, about) => {
-  return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me', {
+  return fetch(`${config.baseUrl}users/me`, {
     headers: config.headers,
     // частичное обнавление данных на сервере
     method: 'PATCH',
@@ -77,7 +90,7 @@ export const updateUserInfo = (name, about) => {
 
 
 export const updateAvatar = (avatarLink) => {
-  return fetch('https://nomoreparties.co/v1/wbf-cohort-14/users/me/avatar', {
+  return fetch(`${config.baseUrl}users/me/avatar`, {
     // частичное обнавление данных на сервере
     method: 'PATCH',
     headers: config.headers,

@@ -3,7 +3,7 @@ import { initialCards } from './utils.js';
 import { createCard } from './card.js';
 import { openPopup, closePopup } from './modal.js';
 import { enableValidation } from "./validate.js";
-import { getUserInfo, getCard, updateAvatar } from "./api.js";
+import { getUserInfo, getCard, updateAvatar, addCard } from "./api.js";
 
 // кнопка редактировать профиль
 const editProfileButton = document.querySelector(".profile__button-edit");
@@ -15,7 +15,7 @@ const popupProfile = document.getElementById("popupProfile");
 const popupAddCard = document.getElementById("popupAddCard");
 // попап редактирования Аватара
 const popupAvatar = document.getElementById("popupAvatar")
-const formAvatar = document.forms.formAvatar;
+const formAvatar = document.forms.formAvatarAddCard;
 // массив всех кнопок закрытия попапов
 const popupCloseButtons = document.querySelectorAll(".popup__close-button");
 // форма редактирования профиля
@@ -90,29 +90,6 @@ initialCards.forEach((card) => {
   addCardToContainer(createCard(card.name, card.link));
 });
 
-// Обработчик отправки формы создания карточки
-formAddCard.addEventListener('submit', (evt) => {
-  // Предотвращаем стандартное поведение формы
-  evt.preventDefault();
-
-  // Получаем название карточки из формы
-  const cardName = formAddCard.elements.cardName.value;
-  // Получаем ссылку на картинку из формы
-  const cardURL = formAddCard.elements.cardURL.value;
-
-  // Создаем новую карточку
-  const newCard = createCard(cardName, cardURL);
-  // Добавляем новую карточку в начало контейнера карточек
-  addCardToContainer(newCard);
-
-  // Очищаем форму
-  formAddCard.reset();
-  // деактивируем кнопку сохранения
-  evt.submitter.disabled = true;
-  // Закрываем попап
-  closePopup(popupAddCard);
-});
-
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -126,14 +103,12 @@ enableValidation(validationConfig);
 // вызываем для получения данных
 getUserInfo()
   // обрабатываем данные, после их получения
-  .then((data) => {
-    // здесь перебираем и обрабатываем каждый элемент данных
-    data.forEach((item) => {
-      // создаем новую карточку для каждого элемента
-      const newCard = createItem(item);
-      // добавляем карточку в список или на страницу
-      addItem(newCard);
-    });
+  .then((userData) => {
+    document.getElementById('name').textContent = userData.name;
+    document.getElementById('about').textContent = userData.about;
+    document.getElementById('avatar').src = userData.avatar;
+    addItem(newCard);
+
   })
   .catch((err) => {
     // Если произошла ошибка, выводим информацию об ошибке в консоль
@@ -157,7 +132,23 @@ getCard()
     console.log(err);
   });
 
+// добавление карточки
+formAddCard.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
+  const cardName = formAddCard.elements.cardName.value;
+  const cardURL = formAddCard.elements.cardURL.value;
+
+  addCard(cardName, cardURL)
+    .then((newCard) => {
+      // Добавляем новую карточку в DOM
+      const cardElement = createCard(newCard.name, newCard.link);
+      addCardToContainer(cardElement);
+
+      closePopup(popupAddCard); // Закрыть попап после добавления карточки
+    })
+    .catch((err) => console.log(err));
+});
 
 
 formAvatar.addEventListener('submit', (evt) => {
