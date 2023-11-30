@@ -64,7 +64,13 @@ export const addCard = (name, link) => {
       link: link
     })
   })
-    .then(handleResponse);
+    .then(handleResponse)
+    // добавляем информацию о новой карточке
+    .then(newCardData => {
+      // возвращаем данные для дальнейшей обработки
+      return newCardData;
+    })
+    .catch(err => console.log(err));
 };
 
 // редактирование профиля

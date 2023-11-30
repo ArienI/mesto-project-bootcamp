@@ -3,7 +3,7 @@ import { initialCards } from './utils.js';
 import { createCard } from './card.js';
 import { openPopup, closePopup } from './modal.js';
 import { enableValidation } from "./validate.js";
-import { getUserInfo, getCard, updateAvatar, addCard } from "./api.js";
+import { getUserInfo, getCard, updateAvatar, addCard, putLike, deleteLike } from "./api.js";
 
 // кнопка редактировать профиль
 const editProfileButton = document.querySelector(".profile__button-edit");
@@ -57,7 +57,7 @@ function handleOverlayClick(evt) {
   }
 }
 
-// // на кнопку редактирования профиля вешаем обработчик который будет открывать попап
+// на кнопку редактирования профиля вешаем обработчик который будет открывать попап
 // editProfileButton.addEventListener("click", () => {
 //   nameInput.value = profileNameText.textContent;
 //   jobInput.value = profileJobText.textContent;
@@ -85,10 +85,10 @@ popupCloseButtons.forEach(popupCloseButton => {
 // Прикрепляем обработчик к форме: он будет следить за событием "submit" - «отправка»
 formProfile.addEventListener("submit", handleFormSubmitProfile);
 
-// Добавление начальных карточек из массива
-initialCards.forEach((card) => {
-  addCardToContainer(createCard(card.name, card.link));
-});
+// // Добавление начальных карточек из массива
+// initialCards.forEach((card) => {
+//   addCardToContainer(createCard(card.name, card.link));
+// });
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -122,7 +122,7 @@ getCard()
     // здесь перебираем и обрабатываем каждый элемент данных
     cards.forEach((card) => {
       // создаем новую карточку для каждого элемента
-      const cardElement = createCard(card.name, card.link);
+      const cardElement = createCard(card.name, card.link, card.likes);
       // добавляем карточку на страницу
       addCardToContainer(cardElement);
     });
@@ -141,11 +141,11 @@ formAddCard.addEventListener('submit', (evt) => {
 
   addCard(cardName, cardURL)
     .then((newCard) => {
-      // Добавляем новую карточку в DOM
-      const cardElement = createCard(newCard.name, newCard.link);
+      // Добавляем новую карточку в DOM, добавляем лайки
+      const cardElement = createCard(newCard.name, newCard.link, []);
       addCardToContainer(cardElement);
-
-      closePopup(popupAddCard); // Закрыть попап после добавления карточки
+      // Закрыть попап после добавления карточки
+      closePopup(popupAddCard);
     })
     .catch((err) => console.log(err));
 });

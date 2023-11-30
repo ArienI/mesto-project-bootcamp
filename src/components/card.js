@@ -4,17 +4,20 @@ import { openImagePopup } from './modal.js';
 const cardTemplate = document.getElementById("cardTemplate").content.querySelector('.card');
 
 // Функция создания карточки
-function createCard(name, link) {
+function createCard(name, link, likes,) {
   // cloneNode(true)- клонируем шаблон с дочерними элементами(глубокое клонирование)
   const cardElement = cardTemplate.cloneNode(true);
-
   const imageElement = cardElement.querySelector(".card__rectangle");
+  // находим элемент для отображения количества лайков и устанавливаем его содержимое
+  const likeCounterElement = cardElement.querySelector(".card__like-counter");
   // устанавливаем ссылку на изображение
   imageElement.src = link;
   // устанавливаем альтернативный текст изображения
   imageElement.alt = name;
   // устанавливаем название
   cardElement.querySelector(".card__caption").textContent = name;
+  // устанавливаем количество лайков
+  likeCounterElement.textContent = likes.length;
 
   // Находим кнопку удаления карточки и добавляем обработчик клика
   const deleteButton = cardElement.querySelector(".card__delete-button");
@@ -37,3 +40,4 @@ function createCard(name, link) {
 }
 
 export { createCard };
+
