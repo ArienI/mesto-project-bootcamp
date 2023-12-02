@@ -16,9 +16,11 @@
 @import url(../blocks/card/__rectangle/card__rectangle.css);
 @import url(../blocks/card/__container/card__container.css);
 @import url(../blocks/card/__caption/card__caption.css);
+@import url(../blocks/card/__like-container/card__like-container.css);
 @import url(../blocks/card/__like/card__like.css);
 @import url(../blocks/card/__like/_active/card__like_active.css);
 @import url(../blocks/card/__delete-button/card__delete-button.css);
+@import url(../blocks/card/__like-counter/card__like-counter.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 @import url(../blocks/popup/popup.css);
@@ -36,15 +38,8 @@
 @import url(../blocks/image-overlay/image-overlay.css);
 
 .profile__avatar {
+  background-image: url(../images/Pen.svg);
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
-}
-
-.card__like-counter {
-  color: #000;
-  text-align: center;
-  font-family: "Inter", Arial, sans-serif;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
 }

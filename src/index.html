@@ -22,19 +22,19 @@
   </header>
   <main>
     <section class="profile">
-      <button class="profile__avatar">
+      <div class="profile__avatar">
         <img src="<%=require('./images/ava.jpeg')%>" id="avatar" class="profile__avatar-image" alt="Аватар">
-      </button>
+      </div>
       <div class="profile__info">
         <div class="profile__edit">
-          <h1 class="profile__title" id="name">Arien the Cat</h1>
+          <h1 class="profile__title" id="name"></h1>
           <button class="profile__button-edit" type="button" title="редактировать"
             aria-label="открыть окно редактирования профиля"></button>
         </div>
-        <p class="profile__subtitle" id="about">Житель Земли</p>
+        <p class="profile__subtitle" id="about"></p>
       </div>
-      <button class="profile__button-add-photo" type="button" title="добавить фото"
-        aria-label="открыть окно добавления фото"></button>
+      <button class="profile__button-add-photo" type="button" title="добавить картинку"
+        aria-label="открыть окно добавления картинки"></button>
     </section>
     <section class="cards"></section>
   </main>
@@ -62,7 +62,7 @@
     <div class="popup__container">
       <button type="button" class="popup__close-button" aria-label="закрыть попап" title="закрыть"></button>
       <h2 class="popup__form-title">Новое место</h2>
-      <form class="popup__form" name="formAvatar" novalidate>
+      <form class="popup__form" name="formAddCard" novalidate>
         <input type="text" placeholder="название" class="popup__input" name="cardName" id="cardName" minlength="2"
           maxlength="30" required>
         <span id="error-cardName" class="error-message"></span>
@@ -78,10 +78,10 @@
     <div class="popup__container">
       <button type="button" class="popup__close-button" aria-label="закрыть попап" title="закрыть"></button>
       <h2 class="popup__form-title">Обновить аватар</h2>
-      <form class="popup__form" name="formAvatarAddCard" novalidate>
-        <input type="url" placeholder="ссылка на картинку" class="popup__input" name="cardAvatarURL" id="cardAvatarURL"
+      <form class="popup__form" name="formAvatar" novalidate>
+        <input type="url" placeholder="ссылка на картинку" class="popup__input" name="avatarURL" id="avatarURL"
           required>
-        <span id="error-cardURL" class="error-message"></span>
+        <span id="error-avatarURL" class="error-message"></span>
         <button type="submit" class="popup__button" aria-label="сохранить">
           Сохранить
         </button>
@@ -103,9 +103,9 @@
       <button class="card__delete-button" type="button" title="Удалить" aria-label="Удалить"></button>
       <div class="card__container">
         <h2 class="card__caption" id="nameCard"></h2>
-        <div class="card__group">
+        <div class="card__like-container">
           <button type="button" class="card__like"></button>
-          <p class="card__like-counter">0</p>
+          <span class="card__like-counter">0</span>
         </div>
       </div>
     </figure>

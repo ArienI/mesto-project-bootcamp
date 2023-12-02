@@ -13,7 +13,7 @@ function openPopup(popup) {
 function closePopup(popup) {
   // Закрываем попап
   popup.classList.remove("popup_opened");
-  // Не забываем удалить обработчик на нажатие Escape
+  // удаляем обработчик на нажатие Escape
   document.removeEventListener('keydown', handleEscape);
 }
 
