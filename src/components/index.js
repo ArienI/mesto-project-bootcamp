@@ -45,29 +45,28 @@ const validationConfig = {
   inputInvalidClass: 'popup__input_invalid',
 }
 
-
-
-async function updateProfileData() {
+async function initializeApp() {
   try {
-    const userData = await getUserInfo();
+    const [userData, cards] = await Promise.all([getUserInfo(), getCards()]);
+
+    //  данные пользователя
     profileNameText.textContent = userData.name;
     profileJobText.textContent = userData.about;
     profileAvatarImage.src = userData.avatar;
     ownerID = userData._id;
-  } catch (err) {
-    console.error('Error fetching user data:', err);
-  }
-}
 
-async function createAndDisplayCards() {
-  try {
-    const cards = await getCards();
-    for (const card of cards) {
-      const cardElement = await createCard(card, ownerID);
+    // создание массива промисов из функции createCard
+    const cardPromises = cards.map(card => createCard(card, ownerID));
+
+    // одновременное выполнение всех промисов
+    const cardElements = await Promise.all(cardPromises);
+
+    // добавление карточек в контейнер
+    cardElements.forEach(cardElement => {
       cardContainer.append(cardElement);
-    }
+    });
   } catch (err) {
-    console.error('Error fetching cards:', err);
+    console.error('Error initializing the app:', err);
   }
 }
 
@@ -97,8 +96,6 @@ async function handleFormSubmitProfile(evt) {
     submitButton.textContent = 'Сохранить';
   }
 }
-
-
 
 // на кнопку редактирования профиля вешаем обработчик который будет открывать попап
 editProfileButton.addEventListener("click", () => {
@@ -175,5 +172,4 @@ popupCloseButtons.forEach(popupCloseButton => {
 
 enableValidation(validationConfig);
 
-await updateProfileData();
-await createAndDisplayCards();
+initializeApp();
