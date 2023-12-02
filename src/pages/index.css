@@ -4,6 +4,7 @@
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
 @import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__avatar-image/profile__avatar-image.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__edit/profile__edit.css);
@@ -36,10 +37,3 @@
 @import url(../blocks/popup/__img-title/popup__img-title.css);
 @import url(../blocks/error-message/error-message.css);
 @import url(../blocks/image-overlay/image-overlay.css);
-
-.profile__avatar {
-  background-image: url(../images/Pen.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-}
