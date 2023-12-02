@@ -37,6 +37,9 @@ async function createCard(card, ownerID) {
         .then(() => {
           // удаляем карточку к которой эта кнопка относится
           cardElement.remove();
+        })
+        .catch(err => {
+          console.error('Error while deleting the card: ', err);
         });
     });
   } else {
@@ -44,17 +47,21 @@ async function createCard(card, ownerID) {
   }
 
   likeButton.addEventListener('click', async () => {
-    let response;
-    if (likeButton.classList.contains('card__like_active')) {
-      response = await removeLike(card._id);
-      console.log(response);
-    } else {
-      response = await setLike(card._id);
-      console.log(response);
+    try {
+      let response;
+      if (likeButton.classList.contains('card__like_active')) {
+        response = await removeLike(card._id);
+        console.log(response);
+      } else {
+        response = await setLike(card._id);
+        console.log(response);
+      }
+      likeCounterElement.textContent = response.likes.length;
+      // переключаем класс card__like_active
+      likeButton.classList.toggle('card__like_active');
+    } catch (err) {
+      console.error('Error while changing the like status: ', err);
     }
-    likeCounterElement.textContent = response.likes.length;
-    // переключаем класс card__like_active
-    likeButton.classList.toggle('card__like_active');
   });
 
   // кликабельная картинка, добавляем обработчик клика

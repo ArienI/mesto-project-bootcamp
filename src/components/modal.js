@@ -24,6 +24,13 @@ function handleEscape(evt) {
   }
 }
 
+function handleOverlayClick(evt) {
+  // Если нажата Escape, закрываем popup
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.target);
+  }
+}
+
 // Функция для открытия попапа с картинкой
 function openImagePopup(name, link) {
   // Устанавливаем ссылку на изображение
@@ -36,4 +43,4 @@ function openImagePopup(name, link) {
   openPopup(popupImage);
 }
 
-export { openPopup, closePopup, openImagePopup };
+export { openPopup, closePopup, openImagePopup, handleOverlayClick };

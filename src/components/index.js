@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import { createCard } from './card.js';
-import { openPopup, closePopup } from './modal.js';
+import { openPopup, closePopup, handleOverlayClick } from './modal.js';
 import { enableValidation } from "./validate.js";
 import { getUserInfo, updateUserInfo, getCards, updateAvatar, addCard } from "./api.js";
 
@@ -45,6 +45,8 @@ const validationConfig = {
   inputInvalidClass: 'popup__input_invalid',
 }
 
+
+
 async function updateProfileData() {
   try {
     const userData = await getUserInfo();
@@ -73,25 +75,30 @@ async function createAndDisplayCards() {
 async function handleFormSubmitProfile(evt) {
   // отменяем стандартную отправку формы. 
   evt.preventDefault();
+
+  // кнопка "сохранить"
+  const submitButton = evt.target.querySelector('.popup__button');
+
   try {
+    // изменяем текст кнопки на "сохранение..."
+    submitButton.textContent = 'сохранение...';
+
     await updateUserInfo(nameInput.value, jobInput.value);
     // новые значения с помощью textContent
     profileNameText.textContent = nameInput.value;
     profileJobText.textContent = jobInput.value;
-  } catch (err) {
-    console.error('Error updating user info:', err);
-    // отобразить сообщение об ошибке пользователю
-  } finally {
     closePopup(popupProfile);
+  } catch (err) {
+
+    console.error('Error updating user info:', err);
+
+  } finally {
+    // возвращаем текст кнопки обратно
+    submitButton.textContent = 'Сохранить';
   }
 }
 
-function handleOverlayClick(evt) {
-  // Если нажата Escape, закрываем popup
-  if (evt.target === evt.currentTarget) {
-    closePopup(evt.target);
-  }
-}
+
 
 // на кнопку редактирования профиля вешаем обработчик который будет открывать попап
 editProfileButton.addEventListener("click", () => {
@@ -108,34 +115,44 @@ imageAddButton.addEventListener("click", () => {
 // добавление карточки
 formAddCard.addEventListener('submit', async (evt) => {
   evt.preventDefault();
+  const submitButton = evt.target.querySelector('.popup__button');
+  submitButton.textContent = 'сохранение...';
 
-  let newCard = await addCard(cardName.value, cardURL.value);
-  // добавляем новую карточку в DOM, добавляем лайки
-  const cardElement = await createCard(newCard, ownerID);
-  cardContainer.prepend(cardElement);
-  // закрыть попап после добавления карточки
-  closePopup(popupAddCard);
+  try {
+    const newCard = await addCard(cardName.value, cardURL.value);
+    // добавляем новую карточку в DOM, добавляем лайки
+    const cardElement = await createCard(newCard, ownerID);
+    cardContainer.prepend(cardElement);
+    // закрыть попап после добавления карточки
+    closePopup(popupAddCard);
 
-  // очищаем поля формы
-  cardName.value = '';
-  cardURL.value = '';
+  } catch (err) {
+    console.error('Error adding new card:', err);
+
+  } finally {
+    submitButton.textContent = 'создать';
+    // Используем метод reset() для очистки формы 
+    evt.target.reset();
+  }
 });
 
-formAvatar.addEventListener('submit', (evt) => {
+formAvatar.addEventListener('submit', async (evt) => {
   evt.preventDefault();
+  const submitButton = evt.target.querySelector('.popup__button');
+  submitButton.textContent = 'сохранение...';
 
-  const avatarLink = formAvatar.elements.avatarURL.value;
+  try {
+    const avatarLink = formAvatar.elements.avatarURL.value;
+    await updateAvatar(avatarLink);
+    profileAvatarImage.src = avatarLink;
+    // закрываем попап только после успешного обновления аватара
+    closePopup(popupAvatar);
+  } catch (err) {
+    console.error('Error updating avatar:', err);
 
-  updateAvatar(avatarLink)
-    .then(() => {
-      profileAvatarImage.src = avatarLink;
-      closePopup(popupAvatar);
-    })
-    .catch((err) => console.log(err));
-});
-
-avatarButton.addEventListener("click", () => {
-  openPopup(popupAvatar);
+  } finally {
+    submitButton.textContent = 'Сохранить';
+  }
 });
 
 
@@ -153,6 +170,7 @@ popupCloseButtons.forEach(popupCloseButton => {
   // Закрытие попапа при клике вне его содержимого
   // обработчик событий на весь попап срабатывает при нажатии кнопки мыши в любом месте попапа
   popupParent.addEventListener('mousedown', handleOverlayClick);
+
 });
 
 enableValidation(validationConfig);

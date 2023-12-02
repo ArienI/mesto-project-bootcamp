@@ -20,16 +20,11 @@ function handleResponse(res) {
 }
 
 async function getUserInfo() {
-  try {
-    const response = await fetch(`${config.baseUrl}users/me`, {
-      headers: config.headers,
-      method: 'GET'
-    });
-    return handleResponse(response);
-  } catch (err) {
-    console.error('Error fetching user data: ', err);
-    throw err;
-  }
+  const response = await fetch(`${config.baseUrl}users/me`, {
+    headers: config.headers,
+    method: 'GET'
+  });
+  return handleResponse(response);
 }
 
 // редактирование профиля
