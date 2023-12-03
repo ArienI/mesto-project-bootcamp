@@ -1,175 +1,192 @@
+// Импортируем CSS стили
 import '../pages/index.css';
+// Импортируем функции из модулей
 import { createCard } from './card.js';
 import { openPopup, closePopup, handleOverlayClick } from './modal.js';
-import { enableValidation } from "./validate.js";
-import { getUserInfo, updateUserInfo, getCards, updateAvatar, addCard } from "./api.js";
+import { enableValidation } from './validate.js';
+import { getUserInfo, updateUserInfo, getCards, updateAvatar, addCard } from './api.js';
 
-// кнопка редактировать профиль
-const editProfileButton = document.querySelector(".profile__button-edit");
-//кнопка добавить картинку
-const imageAddButton = document.querySelector(".profile__button-add-photo");
-// попап редактирования профиля
-const popupProfile = document.getElementById("popupProfile");
-// попап добавления карточки
-const popupAddCard = document.getElementById("popupAddCard");
-// попап редактирования Аватара
-const popupAvatar = document.getElementById("popupAvatar")
+// Кнопка редактирования профиля
+const editProfileButton = document.querySelector('.profile__button-edit');
+// Кнопка добавления картинки
+const imageAddButton = document.querySelector('.profile__button-add-photo');
+// Попап редактирования профиля
+const popupProfile = document.getElementById('popupProfile');
+// Попап добавления карточки
+const popupAddCard = document.getElementById('popupAddCard');
+// Попап редактирования аватара
+const popupAvatar = document.getElementById('popupAvatar')
+// Форма редактирования аватара
 const formAvatar = document.forms.formAvatar;
-const avatarButton = document.querySelector(".profile__avatar");
-const profileAvatarImage = document.querySelector(".profile__avatar-image");
-// массив всех кнопок закрытия попапов
-const popupCloseButtons = document.querySelectorAll(".popup__close-button");
-// форма редактирования профиля
+// Кнопка редактирования аватара
+const avatarButton = document.querySelector('.profile__avatar');
+// Изображение аватара
+const profileAvatarImage = document.querySelector('.profile__avatar-image');
+// Массив кнопок закрытия попапов
+const popupCloseButtons = document.querySelectorAll('.popup__close-button');
+// Форма редактирования профиля
 const formProfile = document.forms.formEditProfile;
-// поле редактирования имени
+// Поле редактирования имени
 const nameInput = formProfile.elements.profileName;
-// поле редактирования информации "о разном"
+// Поле редактирования информации 'о себе'
 const jobInput = formProfile.elements.profileAbout;
-// поле, куда нужно вставить "имя"
-const profileNameText = document.querySelector(".profile__title");
-// поле, куда нужно вставить информацию "о разном"
-const profileJobText = document.querySelector(".profile__subtitle");
-// Форма добавления карточки
+// Поле, куда нужно вставить 'имя'
+const profileNameText = document.querySelector('.profile__title');
+// Поле, куда нужно вставить информацию 'о себе'
+const profileJobText = document.querySelector('.profile__subtitle');
+// Форма добавления новой карточки
 const formAddCard = document.forms.formAddCard;
-// контейнер для карточек
-const cardContainer = document.querySelector(".cards");
+// Контейнер для карточек
+const cardContainer = document.querySelector('.cards');
+// Поле редактирования названия карточки
 const cardName = formAddCard.elements.cardName;
+// Поле редактирования URL карточки
 const cardURL = formAddCard.elements.cardURL;
+// ID владельца карточки (того, кто создал карточку)
 let ownerID = -1;
 
+// Конфигурация для валидации форм
 const validationConfig = {
+  // CSS селекторы
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitSelector: '.popup__button',
-  // красное подчеркивание
+  // CSS класс для красного подчёркивания ошибки
   inputInvalidClass: 'popup__input_invalid',
 }
 
+// Функция инициализации приложения
+// Тут мы заполняем данные профиля и отображаем карточки при загрузке страницы
 async function initializeApp() {
   try {
     const [userData, cards] = await Promise.all([getUserInfo(), getCards()]);
 
-    //  данные пользователя
+    // Заполнение данных пользователя
     profileNameText.textContent = userData.name;
     profileJobText.textContent = userData.about;
     profileAvatarImage.src = userData.avatar;
     ownerID = userData._id;
 
-    // создание массива промисов из функции createCard
-    const cardPromises = cards.map(card => createCard(card, ownerID));
-
-    // одновременное выполнение всех промисов
-    const cardElements = await Promise.all(cardPromises);
-
-    // добавление карточек в контейнер
-    cardElements.forEach(cardElement => {
+    // Отображение карточек
+    for (const card of cards) {
+      const cardElement = await createCard(card, ownerID);
       cardContainer.append(cardElement);
-    });
+    }
   } catch (err) {
-    console.error('Error initializing the app:', err);
+    console.error('Ошибка инициализации приложения: ', err);
   }
 }
 
-// обработчик "отправки" формы профиля
+// Обработчик отправки формы профиля
 async function handleFormSubmitProfile(evt) {
-  // отменяем стандартную отправку формы. 
+  // Отменяем стандартное поведение формы
   evt.preventDefault();
-
-  // кнопка "сохранить"
-  const submitButton = evt.target.querySelector('.popup__button');
-
+  // Кнопка 'Сохранить'
+  const submitButton = evt.submitter;
+  // Изменяем текст кнопки на 'Сохранение...'
+  submitButton.textContent = 'Сохранение...';
+  // Делаем кнопку 'Создать' не активной пока идёт сохранение
+  submitButton.disabled = true;
   try {
-    // изменяем текст кнопки на "сохранение..."
-    submitButton.textContent = 'сохранение...';
-
+    // Обновляем данные профиля на сервере
     await updateUserInfo(nameInput.value, jobInput.value);
-    // новые значения с помощью textContent
+    // Обновляем данные профиля в DOM
     profileNameText.textContent = nameInput.value;
     profileJobText.textContent = jobInput.value;
     closePopup(popupProfile);
   } catch (err) {
-
-    console.error('Error updating user info:', err);
-
+    console.error('Ошибка обновления данных профиля: ', err);
   } finally {
-    // возвращаем текст кнопки обратно
+    // Возвращаем текст кнопки обратно на 'Сохранить'
     submitButton.textContent = 'Сохранить';
   }
 }
 
-// на кнопку редактирования профиля вешаем обработчик который будет открывать попап
-editProfileButton.addEventListener("click", () => {
+// На кнопку редактирования профиля вешаем обработчик который будет открывать попап
+editProfileButton.addEventListener('click', () => {
   nameInput.value = profileNameText.textContent;
   jobInput.value = profileJobText.textContent;
   openPopup(popupProfile);
 });
 
-// на кнопку добавления карточки вешаем обработчик который будет открывать попап
-imageAddButton.addEventListener("click", () => {
+// На аватар вешаем обработчик который будет открывать попап обновления аватара
+avatarButton.addEventListener("click", () => {
+  openPopup(popupAvatar);
+});
+
+// На кнопку добавления карточки вешаем обработчик который будет открывать попап
+imageAddButton.addEventListener('click', () => {
   openPopup(popupAddCard);
 });
 
-// добавление карточки
+// На форму добавления карточки вешаем обработчик который будет добавлять карточку
 formAddCard.addEventListener('submit', async (evt) => {
+  // Отменяем стандартное поведение формы
   evt.preventDefault();
-  const submitButton = evt.target.querySelector('.popup__button');
-  submitButton.textContent = 'сохранение...';
-
+  const submitButton = evt.submitter;
+  // Изменяем текст кнопки на 'Сохранение...'
+  submitButton.textContent = 'Сохранение...';
+  // Делаем кнопку 'Создать' не активной пока идёт сохранение
+  submitButton.disabled = true;
   try {
+    // Добавляем новую карточку на сервер
     const newCard = await addCard(cardName.value, cardURL.value);
-    // добавляем новую карточку в DOM, добавляем лайки
+    // Добавляем новую карточку в DOM
     const cardElement = await createCard(newCard, ownerID);
     cardContainer.prepend(cardElement);
-    // закрыть попап после добавления карточки
+    // Закрываем попап после добавления карточки
     closePopup(popupAddCard);
-
-  } catch (err) {
-    console.error('Error adding new card:', err);
-
-  } finally {
-    submitButton.textContent = 'создать';
-    // Используем метод reset() для очистки формы 
+    // Используем метод reset() для очистки формы если добавление карточки успешное
     evt.target.reset();
+  } catch (err) {
+    console.error('Ошибка добавления новой карточки: ', err);
+  } finally {
+    submitButton.textContent = 'Создать';
   }
 });
 
+// На форму обновления аватара вешем обработчик который будет обновлять аватар
 formAvatar.addEventListener('submit', async (evt) => {
+  // Отменяем стандартное поведение формы
   evt.preventDefault();
-  const submitButton = evt.target.querySelector('.popup__button');
-  submitButton.textContent = 'сохранение...';
-
+  // Кнопка 'Сохранить'
+  const submitButton = evt.submitter;
+  // Изменяем текст кнопки на 'Сохранение...'
+  submitButton.textContent = 'Сохранение...';
+  // Делаем кнопку 'Создать' не активной пока идёт сохранение
+  submitButton.disabled = true;
   try {
+    // Ссылка на новый аватар
     const avatarLink = formAvatar.elements.avatarURL.value;
+    // Обновляем аватар на сервере
     await updateAvatar(avatarLink);
+    // Обновляем аватар в DOM
     profileAvatarImage.src = avatarLink;
-    // закрываем попап только после успешного обновления аватара
+    // Закрываем попап только после успешного обновления аватара
     closePopup(popupAvatar);
   } catch (err) {
-    console.error('Error updating avatar:', err);
-
+    console.error('Ошибка обновления аватара: ', err);
   } finally {
     submitButton.textContent = 'Сохранить';
   }
 });
 
+// На форму обновления профиля вешаем обработчик который обновлять профиль
+formProfile.addEventListener('submit', handleFormSubmitProfile);
 
-// Прикрепляем обработчик к форме("submit" - «отправка»)
-formProfile.addEventListener("submit", handleFormSubmitProfile);
-
-// вешаем обработчки закрытия попапов на все крестики сразу
+// Вешаем обработчки закрытия попапов на все крестики попапов сразу
 popupCloseButtons.forEach(popupCloseButton => {
-  // находим родительский попап текущей кнопки
-  const popupParent = popupCloseButton.closest(".popup");
-  // вешаем на текущую кнопку обработчик который будет закрывать её родительский попап
+  // Находим родительский попап текущей кнопки
+  const popupParent = popupCloseButton.closest('.popup');
+  // Вешаем на текущую кнопку обработчик который будет закрывать её родительский попап
   popupCloseButton.addEventListener('click', () =>
     closePopup(popupParent));
-
   // Закрытие попапа при клике вне его содержимого
-  // обработчик событий на весь попап срабатывает при нажатии кнопки мыши в любом месте попапа
+  // Обработчик событий на весь попап срабатывает при нажатии кнопки мыши в любом месте попапа
   popupParent.addEventListener('mousedown', handleOverlayClick);
-
 });
 
+// Включаем валидацию форм
 enableValidation(validationConfig);
-
+// Запускаем инициализацию приложения
 initializeApp();

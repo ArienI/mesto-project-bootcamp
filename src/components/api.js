@@ -41,38 +41,27 @@ const updateUserInfo = (name, about) => {
   })
     // обработка ответа, проверка на ошибки
     .then(handleResponse)
-    .catch(err => console.log(err));
 };
 
 async function getCards() {
-  try {
-    const response = await fetch(`${config.baseUrl}cards`, {
-      headers: config.headers,
-      method: 'GET'
-    });
-    return handleResponse(response);
-  } catch (err) {
-    console.error('Error fetching cards: ', err);
-    throw err;
-  }
+  const response = await fetch(`${config.baseUrl}cards`, {
+    headers: config.headers,
+    method: 'GET'
+  });
+  return handleResponse(response);
 }
 
 //  добавление новой карточки
 async function addCard(name, link) {
-  try {
-    const response = await fetch(`${config.baseUrl}cards`, {
-      headers: config.headers,
-      method: 'POST',
-      body: JSON.stringify({
-        name: name,
-        link: link
-      })
-    });
-    return handleResponse(response);
-  } catch (err) {
-    console.error('Error adding card: ', err);
-    throw err;
-  }
+  const response = await fetch(`${config.baseUrl}cards`, {
+    headers: config.headers,
+    method: 'POST',
+    body: JSON.stringify({
+      name: name,
+      link: link
+    })
+  });
+  return handleResponse(response);
 }
 
 // Удаление карточек с сервера
@@ -84,33 +73,22 @@ const removeCard = (ID) => {
   })
     // обработка ответа, проверка на ошибки
     .then(handleResponse)
-    .catch(err => console.log(err));
 }
 
 async function setLike(ID) {
-  try {
-    const response = await fetch(`${config.baseUrl}cards/likes/${ID}`, {
-      headers: config.headers,
-      method: 'PUT'
-    });
-    return handleResponse(response);
-  } catch (err) {
-    console.error('Error setting like: ', err);
-    throw err;
-  }
+  const response = await fetch(`${config.baseUrl}cards/likes/${ID}`, {
+    headers: config.headers,
+    method: 'PUT'
+  });
+  return handleResponse(response);
 }
 
 async function removeLike(ID) {
-  try {
-    const response = await fetch(`${config.baseUrl}cards/likes/${ID}`, {
-      headers: config.headers,
-      method: 'DELETE'
-    });
-    return handleResponse(response);
-  } catch (err) {
-    console.error('Error removing like: ', err);
-    throw err;
-  }
+  const response = await fetch(`${config.baseUrl}cards/likes/${ID}`, {
+    headers: config.headers,
+    method: 'DELETE'
+  });
+  return handleResponse(response);
 }
 
 const updateAvatar = (avatarLink) => {
@@ -125,7 +103,6 @@ const updateAvatar = (avatarLink) => {
   })
     // обработка ответа, проверка на ошибки
     .then(handleResponse)
-    .catch(err => console.log(err));
 };
 
 export { getUserInfo, updateUserInfo, getCards, addCard, removeCard, setLike, removeLike, updateAvatar };
