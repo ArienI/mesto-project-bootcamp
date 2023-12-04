@@ -95,6 +95,7 @@ async function handleFormSubmitProfile(evt) {
     profileJobText.textContent = jobInput.value;
     closePopup(popupProfile);
   } catch (err) {
+    submitButton.disabled = false;
     console.error('Ошибка обновления данных профиля: ', err);
   } finally {
     // Возвращаем текст кнопки обратно на 'Сохранить'
@@ -139,6 +140,7 @@ formAddCard.addEventListener('submit', async (evt) => {
     // Используем метод reset() для очистки формы если добавление карточки успешное
     evt.target.reset();
   } catch (err) {
+    submitButton.disabled = false;
     console.error('Ошибка добавления новой карточки: ', err);
   } finally {
     submitButton.textContent = 'Создать';
@@ -165,6 +167,7 @@ formAvatar.addEventListener('submit', async (evt) => {
     // Закрываем попап только после успешного обновления аватара
     closePopup(popupAvatar);
   } catch (err) {
+    submitButton.disabled = false;
     console.error('Ошибка обновления аватара: ', err);
   } finally {
     submitButton.textContent = 'Сохранить';
